@@ -1,0 +1,467 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:CheckInApp.ViewModels"
+             xmlns:converters="clr-namespace:CheckInApp.Converters"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             x:Class="CheckInApp.MainPage"
+             Title="Check-In Empleados">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+            <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <viewmodels:MainViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, *, Auto, Auto">
+
+        <!--  Header  -->
+        <Border Grid.Row="0"
+                Padding="15"
+                BackgroundColor="#2196F3">
+            <VerticalStackLayout>
+                <Label Text="🎄 CONTROL DE ASISTENCIA"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       HorizontalOptions="Center" />
+                <Label Text="Check-In de Personal"
+                       FontSize="14"
+                       TextColor="White"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </Border>
+
+        <!--  Estadísticas EN TIEMPO REAL  -->
+        <Border Grid.Row="1"
+                Margin="0,0,0,0"
+                Padding="10"
+                BackgroundColor="#1976D2"
+                Stroke="White"
+                StrokeThickness="1"
+                HorizontalOptions="Fill">
+            <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="8">
+                <!--  Total Asistentes  -->
+                <Border Padding="8"
+                        BackgroundColor="#4CAF50"
+                        StrokeShape="RoundRectangle 8"
+                        StrokeThickness="0"
+                        HorizontalOptions="Center">
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Opacity="0.4"
+                                Radius="10"
+                                Offset="4,4" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding TotalAsistentes}"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center" />
+                        <Label Text="PRESENTES"
+                               FontSize="10"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!--  Total Invitados  -->
+                <Border Padding="8"
+                        BackgroundColor="#FF9800"
+                        StrokeShape="RoundRectangle 8"
+                        StrokeThickness="0"
+                        HorizontalOptions="Center">
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Opacity="0.4"
+                                Radius="10"
+                                Offset="4,4" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding TotalInvitados}"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center" />
+                        <Label Text="TOTAL"
+                               FontSize="10"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!--  Porcentaje Simple (0 decimales)  -->
+                <Border Padding="8"
+                        BackgroundColor="#2196F3"
+                        StrokeShape="RoundRectangle 8"
+                        StrokeThickness="0"
+                        HorizontalOptions="Center">
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Opacity="0.4"
+                                Radius="10"
+                                Offset="4,4" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding PorcentajeAsistencia}"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center" />
+                        <Label Text="ASISTENCIA"
+                               FontSize="10"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!--  Porcentaje Decimal (3 decimales)  -->
+                <Border Padding="8"
+                        BackgroundColor="#9C27B0"
+                        StrokeShape="RoundRectangle 8"
+                        StrokeThickness="0"
+                        HorizontalOptions="Center">
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Opacity="0.4"
+                                Radius="10"
+                                Offset="4,4" />
+                    </Border.Shadow>
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="{Binding PorcentajeAsistenciaDecimal}"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center" />
+                        <Label Text="PRECISIÓN"
+                               FontSize="8"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               FontAttributes="Bold" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!--  Barra de Búsqueda  -->
+        <Border Grid.Row="2"
+                Padding="10,5"
+                BackgroundColor="#E3F2FD"
+                Stroke="LightGray"
+                StrokeThickness="1">
+            <Grid ColumnDefinitions="*, Auto">
+                <SearchBar Grid.Column="0"
+                           Placeholder="🔍 Buscar por nombre, departamento o nómina..."
+                           Text="{Binding TextoBusqueda}"
+                           BackgroundColor="White"
+                           CancelButtonColor="#2196F3"
+                           PlaceholderColor="#757575">
+                    <SearchBar.Resources>
+                        <Style TargetType="SearchBar">
+                            <Setter Property="HeightRequest" Value="40" />
+                            <Setter Property="Margin" Value="0" />
+                        </Style>
+                    </SearchBar.Resources>
+                </SearchBar>
+
+                <!--  Botón para limpiar búsqueda  -->
+                <Button Grid.Column="1"
+                        Margin="5,0,0,0"
+                        Text="✕"
+                        Command="{Binding LimpiarBusquedaCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="#757575"
+                        FontSize="16"
+                        WidthRequest="40"
+                        HeightRequest="40"
+                        IsVisible="{Binding TextoBusqueda, Converter={StaticResource NullToBoolConverter}}" />
+            </Grid>
+        </Border>
+
+        <!--  Filtros Rápidos  -->
+        <Border Grid.Row="3"
+                Padding="10,5"
+                BackgroundColor="#F5F5F5"
+                Stroke="LightGray"
+                StrokeThickness="1">
+            <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="10">
+                <!--  Todos  -->
+                <Button Grid.Column="0"
+                        Text="👥 Todos"
+                        Command="{Binding FiltrarTodosCommand}"
+                        BackgroundColor="{Binding FiltroSeleccionado, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Todos}"
+                        TextColor="White"
+                        CornerRadius="20"
+                        FontSize="12"
+                        HeightRequest="35">
+                    <Button.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="FontSize" Value="11" />
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <!--  Presentes  -->
+                <Button Grid.Column="1"
+                        Text="✅ Presentes"
+                        Command="{Binding FiltrarPresentesCommand}"
+                        BackgroundColor="{Binding FiltroSeleccionado, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Presentes}"
+                        TextColor="White"
+                        CornerRadius="20"
+                        FontSize="12"
+                        HeightRequest="35" />
+
+                <!--  Ausentes  -->
+                <Button Grid.Column="2"
+                        Text="❌ Ausentes"
+                        Command="{Binding FiltrarAusentesCommand}"
+                        BackgroundColor="{Binding FiltroSeleccionado, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Ausentes}"
+                        TextColor="White"
+                        CornerRadius="20"
+                        FontSize="12"
+                        HeightRequest="35" />
+
+                <!--  Contador de resultados  -->
+                <Border Grid.Column="3"
+                        Padding="5,0"
+                        BackgroundColor="#9E9E9E"
+                        HeightRequest="35"
+                        VerticalOptions="Center"
+                        StrokeThickness="0"
+                        HorizontalOptions="Start">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="17.5" />
+                    </Border.StrokeShape>
+                    <Label Text="{Binding InvitadosFiltrados.Count, StringFormat='{0} resultados'}"
+                           TextColor="White"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
+            </Grid>
+        </Border>
+
+        <!--  Lista de Empleados FILTRADA  -->
+        <CollectionView Grid.Row="4" ItemsSource="{Binding InvitadosFiltrados}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="5"
+                            Padding="10"
+                            BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}}"
+                            Stroke="LightGray"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 5">
+                        <Grid ColumnDefinitions="Auto, *, Auto">
+                            <!--  NÓMINA con color según asistencia  -->
+                            <Border Grid.Column="0"
+                                    Padding="8,5"
+                                    BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}, ConverterParameter=ID}"
+                                    HeightRequest="40"
+                                    WidthRequest="50"
+                                    VerticalOptions="Center"
+                                    StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20" />
+                                </Border.StrokeShape>
+                                <Label Text="{Binding Nomina}"
+                                       TextColor="White"
+                                       FontSize="11"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
+
+                            <!--  Información del empleado - BINDINGS CORREGIDOS  -->
+                            <VerticalStackLayout Grid.Column="1"
+                                                 Padding="10,0,0,0"
+                                                 Spacing="2">
+                                <!--  Nombre  -->
+                                <Label Text="{Binding Nombre}"
+                                       FontSize="14"
+                                       FontAttributes="Bold" />
+                                <!--  Departamento (antes era Unidad)  -->
+                                <Label Text="{Binding Departamento}"
+                                       FontSize="12"
+                                       TextColor="Gray" />
+                                <!--  Supervisor (información adicional)  -->
+                                <Label Text="{Binding Supervisor}"
+                                       FontSize="11"
+                                       TextColor="#666"
+                                       IsVisible="{Binding Supervisor, Converter={StaticResource NullToBoolConverter}}" />
+                                <!--  Hora de check-in si asistió  -->
+                                <Label Text="{Binding HoraCheckIn, StringFormat='Check-in: {0:HH:mm}'}"
+                                       FontSize="10"
+                                       TextColor="Green"
+                                       IsVisible="{Binding Asistio}" />
+                            </VerticalStackLayout>
+
+                            <!--  Indicador de asistencia  -->
+                            <Label Grid.Column="2"
+                                   Text="✓"
+                                   IsVisible="{Binding Asistio}"
+                                   TextColor="Green"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   VerticalOptions="Center" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <!--  Vista vacía personalizada  -->
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="40"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center"
+                                     Spacing="20">
+                    <Label Text="🔍 No se encontraron resultados"
+                           FontSize="16"
+                           TextColor="#9E9E9E"
+                           HorizontalOptions="Center" />
+                    <Label Text="Prueba con otros términos de búsqueda o cambia el filtro"
+                           FontSize="12"
+                           TextColor="#757575"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+        </CollectionView>
+
+        <!--  Status y Botones Principales  -->
+        <Border Grid.Row="5"
+                Padding="10"
+                BackgroundColor="#F5F5F5"
+                Stroke="LightGray">
+            <VerticalStackLayout Spacing="10">
+                <Label Text="{Binding StatusMessage}"
+                       FontSize="14"
+                       HorizontalOptions="Center" />
+
+                <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="8">
+                    <Button Grid.Column="0"
+                            Text="📂 Cargar Excel"
+                            Command="{Binding CargarExcelCommand}"
+                            BackgroundColor="#4CAF50"
+                            TextColor="White"
+                            CornerRadius="8"
+                            FontSize="12" />
+                    <Button Grid.Column="1"
+                            Text="📷 Escanear"
+                            Command="{Binding EscanearQRCommand}"
+                            BackgroundColor="#2196F3"
+                            TextColor="White"
+                            CornerRadius="8"
+                            FontSize="12" />
+                    <Button Grid.Column="2"
+                            Text="📊 Exportar"
+                            Command="{Binding ExportarReporteCommand}"
+                            BackgroundColor="#9C27B0"
+                            TextColor="White"
+                            CornerRadius="8"
+                            FontSize="12" />
+                    <Button Grid.Column="3"
+                            Text="🗑️ Limpiar"
+                            Command="{Binding LimpiarAplicacionCommand}"
+                            BackgroundColor="#D32F2F"
+                            TextColor="White"
+                            CornerRadius="8"
+                            FontSize="12" />
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+
+        <!--  Detalles del Empleado Seleccionado  -->
+        <Border Grid.Row="6"
+                Padding="15"
+                IsVisible="{Binding MostrarDetalles}"
+                BackgroundColor="#E8F5E9"
+                Stroke="Green"
+                StrokeThickness="2"
+                StrokeShape="RoundRectangle 5">
+            <VerticalStackLayout Spacing="5">
+                <Label Text="✅ CHECK-IN REGISTRADO"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="Green" />
+                <!--  BINDINGS CORREGIDOS  -->
+                <Label Text="{Binding InvitadoSeleccionado.Nombre}"
+                       FontSize="18"
+                       FontAttributes="Bold" />
+                <Label Text="{Binding InvitadoSeleccionado.Departamento}" FontSize="14" />
+                <Label Text="{Binding InvitadoSeleccionado.Supervisor}"
+                       FontSize="12"
+                       TextColor="#666" />
+                <Label Text="{Binding InvitadoSeleccionado.HoraCheckIn, StringFormat='Hora: {0:HH:mm:ss}'}" FontSize="12" />
+                <Grid ColumnDefinitions="*, *" ColumnSpacing="10">
+                    <Button Grid.Column="0"
+                            Text="Limpiar"
+                            Command="{Binding LimpiarResultadoCommand}"
+                            BackgroundColor="#FF9800"
+                            TextColor="White"
+                            CornerRadius="8" />
+                    <Button Grid.Column="1"
+                            Text="Exportar Todo"
+                            Command="{Binding ExportarReporteCommand}"
+                            BackgroundColor="#9C27B0"
+                            TextColor="White"
+                            CornerRadius="8" />
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+
+        <!--  Loading Overlay  -->
+        <Grid Grid.RowSpan="7"
+              IsVisible="{Binding IsLoading}"
+              BackgroundColor="#80000000">
+            <ActivityIndicator IsRunning="True"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               Color="#2196F3" />
+        </Grid>
+
+        <!--  QR Scanner Overlay  -->
+        <Grid Grid.RowSpan="7"
+              IsVisible="{Binding IsScanning}"
+              BackgroundColor="Transparent">
+
+            <zxing:CameraBarcodeReaderView x:Name="barcodeReader"
+                                           BarcodesDetected="BarcodesDetected"
+                                           IsDetecting="True" />
+
+            <Border Padding="0"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    BackgroundColor="Transparent"
+                    Stroke="White"
+                    StrokeThickness="2"
+                    StrokeShape="RoundRectangle 10"
+                    HeightRequest="250"
+                    WidthRequest="250" />
+
+            <Label Margin="0,50,0,0"
+                   Text="Escanea el código de barras"
+                   TextColor="White"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Start" />
+
+            <Button Margin="0,0,0,50"
+                    Text="✕ Cancelar"
+                    Clicked="OnCancelScanClicked"
+                    BackgroundColor="#D32F2F"
+                    TextColor="White"
+                    HorizontalOptions="Center"
+                    VerticalOptions="End" />
+        </Grid>
+
+    </Grid>
+</ContentPage>

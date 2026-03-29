@@ -1,0 +1,788 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:CheckInApp.ViewModels"
+             xmlns:converters="clr-namespace:CheckInApp.Converters"
+             xmlns:zxing="clr-namespace:ZXing.Net.Maui.Controls;assembly=ZXing.Net.MAUI.Controls"
+             x:Class="CheckInApp.MainPage"
+             Title="Check-In Empleados"
+             BackgroundColor="{AppThemeBinding Light=#F0EFF5,
+                                               Dark=#0F0D13}"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!--  Material Design 3 Color Tokens  -->
+            <Color x:Key="Primary">#5B4397</Color>
+            <Color x:Key="OnPrimary">#FFFFFF</Color>
+            <Color x:Key="PrimaryContainer">#E8DEFF</Color>
+            <Color x:Key="OnPrimaryContainer">#1A0052</Color>
+            <Color x:Key="Secondary">#5A5470</Color>
+            <Color x:Key="OnSecondary">#FFFFFF</Color>
+            <Color x:Key="SecondaryContainer">#DFD8F5</Color>
+            <Color x:Key="OnSecondaryContainer">#16112A</Color>
+            <Color x:Key="Tertiary">#72455A</Color>
+            <Color x:Key="OnTertiary">#FFFFFF</Color>
+            <Color x:Key="TertiaryContainer">#FFD8E4</Color>
+            <Color x:Key="OnTertiaryContainer">#2B0014</Color>
+            <Color x:Key="Error">#BA1A1A</Color>
+            <Color x:Key="OnError">#FFFFFF</Color>
+            <Color x:Key="ErrorContainer">#FFDAD6</Color>
+            <Color x:Key="OnErrorContainer">#410002</Color>
+            <Color x:Key="Surface">#FEFBFF</Color>
+            <Color x:Key="OnSurface">#1C1B1F</Color>
+            <Color x:Key="SurfaceVariant">#E7E0F0</Color>
+            <Color x:Key="OnSurfaceVariant">#48454E</Color>
+            <Color x:Key="Outline">#79747F</Color>
+            <Color x:Key="OutlineVariant">#C9C3D5</Color>
+            <Color x:Key="InverseSurface">#313033</Color>
+            <Color x:Key="InverseOnSurface">#F4EFF4</Color>
+            <Color x:Key="InversePrimary">#CFBBFF</Color>
+            <Color x:Key="Shadow">#000000</Color>
+            <Color x:Key="SurfaceTint">#5B4397</Color>
+            <Color x:Key="Scrim">#000000</Color>
+            <!--  Semantic Colors  -->
+            <Color x:Key="Success">#1E7E34</Color>
+            <Color x:Key="SuccessLight">#2ECC4F</Color>
+            <Color x:Key="OnSuccess">#FFFFFF</Color>
+            <Color x:Key="SuccessContainer">#D4EDDA</Color>
+            <Color x:Key="Warning">#E65C00</Color>
+            <Color x:Key="OnWarning">#FFFFFF</Color>
+            <Color x:Key="WarningContainer">#FFF0E0</Color>
+            <Color x:Key="Info">#0062A3</Color>
+            <Color x:Key="InfoLight">#1A88D6</Color>
+            <Color x:Key="OnInfo">#FFFFFF</Color>
+            <Color x:Key="InfoContainer">#D1E8FF</Color>
+            <!--  Gradients  -->
+            <LinearGradientBrush x:Key="HeaderGradient" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0" Color="#3B2C6E" />
+                <GradientStop Offset="0.5" Color="#5B4397" />
+                <GradientStop Offset="1" Color="#7E45A0" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="SuccessGradient" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0" Color="#1E7E34" />
+                <GradientStop Offset="1" Color="#2ECC4F" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="WarningGradient" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0" Color="#D05000" />
+                <GradientStop Offset="1" Color="#FF7A20" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="InfoGradient" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0" Color="#0062A3" />
+                <GradientStop Offset="1" Color="#1A88D6" />
+            </LinearGradientBrush>
+            <LinearGradientBrush x:Key="AccentGradient" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Offset="0" Color="#5B4397" />
+                <GradientStop Offset="1" Color="#9A5CC2" />
+            </LinearGradientBrush>
+            <!--  Shadows / Elevation  -->
+            <Shadow x:Key="Elevation1"
+                    Brush="#000000"
+                    Opacity="0.08"
+                    Radius="6"
+                    Offset="0,2" />
+            <Shadow x:Key="Elevation2"
+                    Brush="#000000"
+                    Opacity="0.12"
+                    Radius="10"
+                    Offset="0,4" />
+            <Shadow x:Key="Elevation3"
+                    Brush="#000000"
+                    Opacity="0.18"
+                    Radius="16"
+                    Offset="0,6" />
+            <!--  Styles  -->
+            <Style x:Key="CardStyle" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Surface}, Dark=#1C1A22}" />
+                <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource OutlineVariant}, Dark=#3A3545}" />
+                <Setter Property="StrokeThickness" Value="1" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 16" />
+                <Setter Property="Shadow" Value="{StaticResource Elevation1}" />
+            </Style>
+            <Style x:Key="StatCardStyle" TargetType="Border">
+                <Setter Property="Padding" Value="10,12" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="Shadow" Value="{StaticResource Elevation2}" />
+            </Style>
+            <Style x:Key="FilterButtonStyle" TargetType="Button">
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="HeightRequest" Value="34" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="CharacterSpacing" Value="0.3" />
+            </Style>
+            <Style x:Key="ActionButtonStyle" TargetType="Button">
+                <Setter Property="CornerRadius" Value="14" />
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="HeightRequest" Value="46" />
+                <Setter Property="CharacterSpacing" Value="0.2" />
+                <Setter Property="Shadow" Value="{StaticResource Elevation1}" />
+            </Style>
+            <!--  Converters  -->
+            <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
+            <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <converters:BoolToStringConverter x:Key="BoolToStringConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <viewmodels:MainViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, *, Auto, Auto" RowSpacing="0">
+
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <!--  HEADER  -->
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <Border Grid.Row="0"
+                Padding="0"
+                StrokeThickness="0">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Offset="0" Color="#3B2C6E" />
+                    <GradientStop Offset="0.55" Color="#5B4397" />
+                    <GradientStop Offset="1" Color="#7E45A0" />
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid>
+                <!--  Decorative top accent line  -->
+                <BoxView HeightRequest="3"
+                         VerticalOptions="Start"
+                         HorizontalOptions="Fill">
+                    <BoxView.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Offset="0" Color="#CFBBFF" />
+                            <GradientStop Offset="0.5" Color="#E8DEFF" />
+                            <GradientStop Offset="1" Color="#CFBBFF" />
+                        </LinearGradientBrush>
+                    </BoxView.Background>
+                </BoxView>
+                <VerticalStackLayout Padding="24,22,24,20" Spacing="3">
+                    <Label Text="CONTROL DE ASISTENCIA"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="#FFFFFF"
+                           HorizontalOptions="Center"
+                           CharacterSpacing="1.5">
+                        <Label.Shadow>
+                            <Shadow Brush="#000000"
+                                    Opacity="0.35"
+                                    Radius="6"
+                                    Offset="0,2" />
+                        </Label.Shadow>
+                    </Label>
+                    <Label Text="Sistema de Check-In de Personal"
+                           FontSize="12"
+                           TextColor="#D0BCFF"
+                           HorizontalOptions="Center"
+                           CharacterSpacing="0.5"
+                           Opacity="0.9" />
+                </VerticalStackLayout>
+            </Grid>
+        </Border>
+
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <!--  ESTADÍSTICAS  -->
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <Border Grid.Row="1"
+                Margin="14,10,14,0"
+                Padding="12"
+                Style="{StaticResource CardStyle}">
+            <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="8">
+                <Border Grid.Column="0"
+                        Style="{StaticResource StatCardStyle}"
+                        Background="{StaticResource SuccessGradient}">
+                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                        <Label Text="{Binding TotalAsistentes}"
+                               FontSize="22"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center">
+                            <Label.Shadow>
+                                <Shadow Brush="#000000"
+                                        Opacity="0.2"
+                                        Radius="4"
+                                        Offset="0,1" />
+                            </Label.Shadow>
+                        </Label>
+                        <Label Text="PRESENTES"
+                               FontSize="8"
+                               TextColor="White"
+                               Opacity="0.85"
+                               HorizontalOptions="Center"
+                               FontAttributes="Bold"
+                               CharacterSpacing="0.8" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="1"
+                        Style="{StaticResource StatCardStyle}"
+                        Background="{StaticResource WarningGradient}">
+                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                        <Label Text="{Binding TotalInvitados}"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center">
+                            <Label.Shadow>
+                                <Shadow Brush="#000000"
+                                        Opacity="0.2"
+                                        Radius="4"
+                                        Offset="0,1" />
+                            </Label.Shadow>
+                        </Label>
+                        <Label Text="TOTAL"
+                               FontSize="8"
+                               TextColor="White"
+                               Opacity="0.85"
+                               HorizontalOptions="Center"
+                               FontAttributes="Bold"
+                               CharacterSpacing="0.8" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="2"
+                        Style="{StaticResource StatCardStyle}"
+                        Background="{StaticResource InfoGradient}">
+                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                        <Label Text="{Binding PorcentajeAsistencia}"
+                               FontSize="22"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center">
+                            <Label.Shadow>
+                                <Shadow Brush="#000000"
+                                        Opacity="0.2"
+                                        Radius="4"
+                                        Offset="0,1" />
+                            </Label.Shadow>
+                        </Label>
+                        <Label Text="ASISTENCIA"
+                               FontSize="8"
+                               TextColor="White"
+                               Opacity="0.85"
+                               HorizontalOptions="Center"
+                               FontAttributes="Bold"
+                               CharacterSpacing="0.8" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="3"
+                        Style="{StaticResource StatCardStyle}"
+                        Background="{StaticResource AccentGradient}">
+                    <VerticalStackLayout Spacing="2" HorizontalOptions="Center">
+                        <Label Text="{Binding PorcentajeAsistenciaDecimal}"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center">
+                            <Label.Shadow>
+                                <Shadow Brush="#000000"
+                                        Opacity="0.2"
+                                        Radius="4"
+                                        Offset="0,1" />
+                            </Label.Shadow>
+                        </Label>
+                        <Label Text="PRECISIÓN"
+                               FontSize="8"
+                               TextColor="White"
+                               Opacity="0.85"
+                               HorizontalOptions="Center"
+                               FontAttributes="Bold"
+                               CharacterSpacing="0.8" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <!--  BARRA DE BÚSQUEDA  -->
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <Border Grid.Row="2"
+                Margin="14,10,14,0"
+                Padding="6,2"
+                BackgroundColor="{AppThemeBinding Light=#FFFFFF,
+                                                  Dark=#1C1A22}"
+                Stroke="{AppThemeBinding Light={StaticResource OutlineVariant},
+                                         Dark=#3A3545}"
+                StrokeThickness="1.5"
+                StrokeShape="RoundRectangle 26"
+                Shadow="{StaticResource Elevation1}">
+            <Grid ColumnDefinitions="*, Auto" ColumnSpacing="4">
+                <SearchBar Grid.Column="0"
+                           Placeholder="Buscar por nombre, departamento o nómina..."
+                           Text="{Binding TextoBusqueda}"
+                           BackgroundColor="Transparent"
+                           CancelButtonColor="{StaticResource Primary}"
+                           PlaceholderColor="{StaticResource Outline}"
+                           TextColor="{AppThemeBinding Light={StaticResource OnSurface},
+                                                       Dark=White}"
+                           FontSize="13"
+                           HeightRequest="44">
+                    <SearchBar.Margin>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS" Value="8,0,0,0" />
+                            <On Platform="Android" Value="0" />
+                        </OnPlatform>
+                    </SearchBar.Margin>
+                </SearchBar>
+                <Button Grid.Column="1"
+                        Margin="0,0,6,0"
+                        Text="✕"
+                        Command="{Binding LimpiarBusquedaCommand}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource SurfaceVariant},
+                                                          Dark=#2D2A38}"
+                        TextColor="{StaticResource OnSurfaceVariant}"
+                        FontSize="14"
+                        WidthRequest="34"
+                        HeightRequest="34"
+                        CornerRadius="17"
+                        IsVisible="{Binding TextoBusqueda, Converter={StaticResource NullToBoolConverter}}" />
+            </Grid>
+        </Border>
+
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <!--  FILTROS  -->
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <Border Grid.Row="3"
+                Margin="14,8,14,0"
+                Padding="10,8"
+                Style="{StaticResource CardStyle}">
+            <Grid ColumnDefinitions="*, *, *, Auto" ColumnSpacing="6">
+                <Button Grid.Column="0"
+                        Text="Todos"
+                        Command="{Binding FiltrarTodosCommand}"
+                        BackgroundColor="{Binding FiltroSeleccionado, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Todos}"
+                        TextColor="White"
+                        Style="{StaticResource FilterButtonStyle}" />
+                <Button Grid.Column="1"
+                        Text="Presentes"
+                        Command="{Binding FiltrarPresentesCommand}"
+                        BackgroundColor="{Binding FiltroSeleccionado, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Presentes}"
+                        TextColor="White"
+                        Style="{StaticResource FilterButtonStyle}" />
+                <Button Grid.Column="2"
+                        Text="Ausentes"
+                        Command="{Binding FiltrarAusentesCommand}"
+                        BackgroundColor="{Binding FiltroSeleccionado, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Ausentes}"
+                        TextColor="White"
+                        Style="{StaticResource FilterButtonStyle}" />
+                <Border Grid.Column="3"
+                        Padding="10,0"
+                        BackgroundColor="{StaticResource SecondaryContainer}"
+                        HeightRequest="30"
+                        VerticalOptions="Center"
+                        StrokeThickness="0"
+                        HorizontalOptions="End">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="15" />
+                    </Border.StrokeShape>
+                    <Label Text="{Binding InvitadosFiltrados.Count, StringFormat='{0} resultados'}"
+                           TextColor="{StaticResource OnSecondaryContainer}"
+                           FontSize="11"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center" />
+                </Border>
+            </Grid>
+        </Border>
+
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <!--  LISTA DE EMPLEADOS  -->
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <CollectionView Grid.Row="4"
+                        Margin="14,8,14,0"
+                        ItemsSource="{Binding InvitadosFiltrados}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="6" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Margin="0,1"
+                            Padding="0"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource Surface},
+                                                              Dark=#1C1A22}"
+                            Stroke="{AppThemeBinding Light={StaticResource OutlineVariant},
+                                                     Dark=#3A3545}"
+                            StrokeThickness="1"
+                            StrokeShape="RoundRectangle 14"
+                            Shadow="{StaticResource Elevation1}">
+                        <Grid ColumnDefinitions="Auto, *, Auto">
+                            <!--  Avatar circular con nómina  -->
+                            <Border Grid.Column="0"
+                                    Margin="12,10"
+                                    Padding="0"
+                                    BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}, ConverterParameter=ID}"
+                                    HeightRequest="46"
+                                    WidthRequest="46"
+                                    VerticalOptions="Center"
+                                    StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="23" />
+                                </Border.StrokeShape>
+                                <Label Text="{Binding Nomina}"
+                                       TextColor="White"
+                                       FontSize="11"
+                                       FontAttributes="Bold"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                            </Border>
+                            <!--  Información del empleado  -->
+                            <VerticalStackLayout Grid.Column="1"
+                                                 Padding="0,10,0,10"
+                                                 Spacing="3">
+                                <Label Text="{Binding Nombre}"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light={StaticResource OnSurface},
+                                                                   Dark=White}" />
+                                <Label Text="{Binding Departamento}"
+                                       FontSize="12"
+                                       TextColor="{StaticResource OnSurfaceVariant}" />
+                                <Label Text="{Binding Supervisor}"
+                                       FontSize="11"
+                                       TextColor="{StaticResource Outline}"
+                                       IsVisible="{Binding Supervisor, Converter={StaticResource NullToBoolConverter}}" />
+                                <Label Text="{Binding HoraCheckIn, StringFormat='Check-in: {0:HH:mm}'}"
+                                       FontSize="11"
+                                       TextColor="{StaticResource Success}"
+                                       FontAttributes="Bold"
+                                       IsVisible="{Binding Asistio}">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label"
+                                                     Binding="{Binding RegistroForzado}"
+                                                     Value="True">
+                                            <Setter Property="TextColor" Value="{StaticResource Warning}" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </VerticalStackLayout>
+                            <!--  Badge de estado  -->
+                            <Border Grid.Column="2"
+                                    Margin="0,0,12,0"
+                                    Padding="10,8"
+                                    BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Background}"
+                                    StrokeThickness="0"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="End">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="22" />
+                                </Border.StrokeShape>
+                                <Label Text="{Binding RegistroForzado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='⚠️|✓'}"
+                                       TextColor="{Binding RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Orange|Green'}"
+                                       FontSize="18"
+                                       FontAttributes="Bold" />
+                            </Border>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <VerticalStackLayout Padding="48,60"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center"
+                                     Spacing="14">
+                    <Label Text="🔍"
+                           FontSize="52"
+                           HorizontalOptions="Center"
+                           Opacity="0.4" />
+                    <Label Text="Sin resultados"
+                           FontSize="17"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource OnSurfaceVariant}"
+                           HorizontalOptions="Center" />
+                    <Label Text="Prueba otros términos de búsqueda o cambia el filtro"
+                           FontSize="13"
+                           TextColor="{StaticResource Outline}"
+                           HorizontalOptions="Center"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+        </CollectionView>
+
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <!--  BOTONES PRINCIPALES  -->
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <Border Grid.Row="5"
+                Margin="14,8,14,0"
+                Padding="12"
+                Style="{StaticResource CardStyle}">
+            <VerticalStackLayout Spacing="10">
+                <Label Text="{Binding StatusMessage}"
+                       FontSize="12"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       TextColor="{StaticResource OnSurfaceVariant}"
+                       Opacity="0.9" />
+                <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="8">
+                    <Button Grid.Column="0"
+                            Text="Cargar"
+                            Command="{Binding CargarExcelCommand}"
+                            BackgroundColor="{StaticResource Success}"
+                            TextColor="White"
+                            Style="{StaticResource ActionButtonStyle}" />
+                    <Button Grid.Column="1"
+                            Text="Escanear"
+                            Command="{Binding EscanearQRCommand}"
+                            BackgroundColor="{StaticResource Info}"
+                            TextColor="White"
+                            Style="{StaticResource ActionButtonStyle}" />
+                    <Button Grid.Column="2"
+                            Text="Exportar"
+                            Command="{Binding ExportarReporteCommand}"
+                            BackgroundColor="{StaticResource Primary}"
+                            TextColor="White"
+                            Style="{StaticResource ActionButtonStyle}" />
+                    <Button Grid.Column="3"
+                            Text="Limpiar"
+                            Command="{Binding LimpiarAplicacionCommand}"
+                            BackgroundColor="{StaticResource Error}"
+                            TextColor="White"
+                            Style="{StaticResource ActionButtonStyle}" />
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <!--  DETALLES DEL EMPLEADO  -->
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <Border Grid.Row="6"
+                Margin="14,8,14,10"
+                Padding="16"
+                IsVisible="{Binding MostrarDetalles}"
+                BackgroundColor="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FFF3E0|#E8F5E9'}"
+                Stroke="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Orange|Green'}"
+                StrokeThickness="1.5"
+                StrokeShape="RoundRectangle 16"
+                Shadow="{StaticResource Elevation3}">
+            <VerticalStackLayout Spacing="10">
+                <!--  Encabezado de estado  -->
+                <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
+                    <Label Text="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='⚠️|✓'}"
+                           FontSize="22"
+                           TextColor="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Orange|Green'}" />
+                    <Label Text="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='REGISTRO FORZADO|CHECK-IN REGISTRADO'}"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"
+                           TextColor="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Orange|Green'}"
+                           CharacterSpacing="0.5" />
+                </HorizontalStackLayout>
+                <!--  Separador  -->
+                <BoxView HeightRequest="1"
+                         Opacity="0.7"
+                         Color="{AppThemeBinding Light={StaticResource OutlineVariant},
+                                                 Dark=#3A3545}" />
+                <!--  Nombre del empleado  -->
+                <Label Text="{Binding InvitadoSeleccionado.Nombre}"
+                       FontSize="17"
+                       FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource OnSurface},
+                                                   Dark=White}"
+                       HorizontalOptions="Center" />
+                <!--  Departamento y supervisor  -->
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="14">
+                    <Label Text="{Binding InvitadoSeleccionado.Departamento}"
+                           FontSize="13"
+                           TextColor="{StaticResource OnSurfaceVariant}" />
+                    <BoxView WidthRequest="1"
+                             HeightRequest="14"
+                             VerticalOptions="Center"
+                             Color="{StaticResource OutlineVariant}" />
+                    <Label Text="{Binding InvitadoSeleccionado.Supervisor}"
+                           FontSize="13"
+                           TextColor="{StaticResource OnSurfaceVariant}" />
+                </HorizontalStackLayout>
+                <!--  Hora  -->
+                <Label Text="{Binding InvitadoSeleccionado.HoraCheckIn, StringFormat='Hora: {0:HH:mm:ss}'}"
+                       FontSize="12"
+                       TextColor="{StaticResource OnSurfaceVariant}"
+                       HorizontalOptions="Center"
+                       FontAttributes="Bold" />
+                <!--  Derecho a despensa  -->
+                <Border Padding="12,10"
+                        BackgroundColor="{Binding InvitadoSeleccionado.TieneDerechoADespensa, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#E8F5E9|#FFEBEE'}"
+                        StrokeThickness="0"
+                        StrokeShape="RoundRectangle 10">
+                    <Label Text="{Binding InvitadoSeleccionado.EstadoDerecho}"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="{Binding InvitadoSeleccionado.TieneDerechoADespensa, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Green|Red'}" />
+                </Border>
+                <!--  Aviso de registro forzado  -->
+                <Label IsVisible="{Binding InvitadoSeleccionado.RegistroForzado}"
+                       Text="⚠️ ATENCIÓN: Empleado SIN DERECHO a despensa. Registro autorizado por operador."
+                       FontSize="11"
+                       TextColor="DarkOrange"
+                       FontAttributes="Italic"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center" />
+                <!--  Acciones  -->
+                <Grid Margin="0,4,0,0"
+                      ColumnDefinitions="*, *"
+                      ColumnSpacing="10">
+                    <Button Grid.Column="0"
+                            Text="Limpiar"
+                            Command="{Binding LimpiarResultadoCommand}"
+                            BackgroundColor="{StaticResource Warning}"
+                            TextColor="White"
+                            CornerRadius="12"
+                            FontAttributes="Bold"
+                            HeightRequest="44"
+                            Shadow="{StaticResource Elevation1}" />
+                    <Button Grid.Column="1"
+                            Text="Exportar Todo"
+                            Command="{Binding ExportarReporteCommand}"
+                            BackgroundColor="{StaticResource Primary}"
+                            TextColor="White"
+                            CornerRadius="12"
+                            FontAttributes="Bold"
+                            HeightRequest="44"
+                            Shadow="{StaticResource Elevation1}" />
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <!--  LOADING OVERLAY  -->
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <Grid Grid.RowSpan="7"
+              IsVisible="{Binding IsLoading}"
+              BackgroundColor="#90000000">
+            <Border Padding="32,28"
+                    BackgroundColor="{AppThemeBinding Light=#FEFBFF,
+                                                      Dark=#1C1A22}"
+                    Stroke="{AppThemeBinding Light={StaticResource OutlineVariant},
+                                             Dark=#3A3545}"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 20"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Shadow="{StaticResource Elevation3}">
+                <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
+                    <ActivityIndicator IsRunning="True"
+                                       HeightRequest="48"
+                                       WidthRequest="48"
+                                       Color="{StaticResource Primary}" />
+                    <Label Text="Procesando..."
+                           TextColor="{StaticResource OnSurface}"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           CharacterSpacing="0.5" />
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <!--  QR SCANNER OVERLAY  -->
+        <!--  ═══════════════════════════════════════════════════════  -->
+        <Grid Grid.RowSpan="7"
+              IsVisible="{Binding IsScanning}"
+              BackgroundColor="#D9000000">
+            <zxing:CameraBarcodeReaderView x:Name="barcodeReader"
+                                           BarcodesDetected="BarcodesDetected"
+                                           IsDetecting="True" />
+            <!--  Instrucción superior  -->
+            <Border Margin="0,48,0,0"
+                    Padding="20,10"
+                    BackgroundColor="#CC1C1A22"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 24"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Start">
+                <Label Text="Escanea el código de barras"
+                       TextColor="White"
+                       FontAttributes="Bold"
+                       FontSize="15"
+                       CharacterSpacing="0.3"
+                       HorizontalOptions="Center" />
+            </Border>
+            <!--  Marco del scanner  -->
+            <Grid HorizontalOptions="Center"
+                  VerticalOptions="Center"
+                  HeightRequest="270"
+                  WidthRequest="270">
+                <!--  Marco exterior  -->
+                <Border Stroke="#44FFFFFF"
+                        StrokeThickness="1"
+                        BackgroundColor="Transparent"
+                        StrokeShape="RoundRectangle 24"
+                        HorizontalOptions="Fill"
+                        VerticalOptions="Fill" />
+                <!--  Esquinas: Superior izquierda  -->
+                <BoxView Margin="0,0,0,0"
+                         HeightRequest="44"
+                         WidthRequest="5"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Start"
+                         Color="#5B4397" />
+                <BoxView Margin="0,0,0,0"
+                         HeightRequest="5"
+                         WidthRequest="44"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Start"
+                         Color="#5B4397" />
+                <!--  Esquina: Superior derecha  -->
+                <BoxView Margin="0,0,0,0"
+                         HeightRequest="44"
+                         WidthRequest="5"
+                         HorizontalOptions="End"
+                         VerticalOptions="Start"
+                         Color="#5B4397" />
+                <BoxView Margin="0,0,0,0"
+                         HeightRequest="5"
+                         WidthRequest="44"
+                         HorizontalOptions="End"
+                         VerticalOptions="Start"
+                         Color="#5B4397" />
+                <!--  Esquina: Inferior izquierda  -->
+                <BoxView Margin="0,0,0,0"
+                         HeightRequest="44"
+                         WidthRequest="5"
+                         HorizontalOptions="Start"
+                         VerticalOptions="End"
+                         Color="#5B4397" />
+                <BoxView Margin="0,0,0,0"
+                         HeightRequest="5"
+                         WidthRequest="44"
+                         HorizontalOptions="Start"
+                         VerticalOptions="End"
+                         Color="#5B4397" />
+                <!--  Esquina: Inferior derecha  -->
+                <BoxView Margin="0,0,0,0"
+                         HeightRequest="44"
+                         WidthRequest="5"
+                         HorizontalOptions="End"
+                         VerticalOptions="End"
+                         Color="#5B4397" />
+                <BoxView Margin="0,0,0,0"
+                         HeightRequest="5"
+                         WidthRequest="44"
+                         HorizontalOptions="End"
+                         VerticalOptions="End"
+                         Color="#5B4397" />
+            </Grid>
+            <!--  Botón cancelar  -->
+            <Button Margin="0,0,0,52"
+                    Text="✕  Cancelar"
+                    Clicked="OnCancelScanClicked"
+                    BackgroundColor="{StaticResource Error}"
+                    TextColor="White"
+                    CornerRadius="26"
+                    WidthRequest="150"
+                    HeightRequest="52"
+                    FontAttributes="Bold"
+                    FontSize="14"
+                    CharacterSpacing="0.4"
+                    HorizontalOptions="Center"
+                    VerticalOptions="End"
+                    Shadow="{StaticResource Elevation3}" />
+        </Grid>
+
+    </Grid>
+</ContentPage>
