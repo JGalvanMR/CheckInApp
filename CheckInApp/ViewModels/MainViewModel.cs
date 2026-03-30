@@ -121,6 +121,7 @@ namespace CheckInApp.ViewModels
                             var nombre = row.Cell(4).GetString()?.Trim();
                             var supervisor = row.Cell(5).GetString()?.Trim();
                             var departamento = row.Cell(6).GetString()?.Trim();
+                            var examenMedico = row.Cell(7).GetString()?.Trim().ToUpper() == "OK";
 
                             if (string.IsNullOrWhiteSpace(nombre) ||
                                 nombre.ToUpper().Contains("NOMBRE") ||
@@ -135,6 +136,7 @@ namespace CheckInApp.ViewModels
                                 Nombre = nombre,
                                 Supervisor = supervisor,
                                 Departamento = departamento,
+                                ExamenMedico = examenMedico,
                                 TieneDerechoADespensa = codigosConDespensa.Contains(codigoBarras),
                                 FileName = resultado.FileName,
                                 Timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
@@ -222,6 +224,42 @@ namespace CheckInApp.ViewModels
                     StatusMessage = $"❌ Empleado no encontrado: {codigo}";
                     return;
                 }
+
+                #region EXAMEN MEDICO
+                if (!empleado.ExamenMedico)
+                {
+                    bool continuar = await Application.Current.MainPage.DisplayAlert(
+                        "⚠️ EXAMEN MÉDICO PENDIENTE",
+                        $"El empleado:\n\n👤 {empleado.Nombre}\n🏢 {empleado.Departamento}\n📋 Nómina: {empleado.Nomina}\n\n" +
+                        "NO ha realizado su examen médico anual.\n\n" +
+                        "Este personal SÍ tiene derecho a despensa, sin embargo tiene un trámite pendiente con Servicio Médico.\n\n" +
+                        "¿Deseas forzar el registro?",
+                        "Sí, registrar", "No, cancelar");
+
+                    if (!continuar)
+                    {
+                        StatusMessage = $"⛔ Registro cancelado para {empleado.Nombre} (Examen médico pendiente)";
+                        return;
+                    }
+
+                    empleado.Asistio = true;
+                    empleado.HoraCheckIn = DateTime.Now;
+                    empleado.RegistroForzado = true;
+
+                    await GuardarAsistencia();
+                    ActualizarEstadisticas();
+
+                    StatusMessage = $"⚠️ {empleado.Nombre} registrado (EXAMEN MÉDICO PENDIENTE — FORZADO)";
+
+                    InvitadoSeleccionado = empleado;
+
+                    Vibration.Vibrate(TimeSpan.FromMilliseconds(200));
+
+                    FiltrarInvitados();
+                    return; // 🔴 IMPORTANTE: cortar flujo para que no siga a otras validaciones
+                }
+                #endregion
+
 
                 if (!empleado.TieneDerechoADespensa)
                 {
