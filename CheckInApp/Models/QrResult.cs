@@ -30,6 +30,7 @@ namespace CheckInApp.Models
         public bool TieneDerechoADespensa { get; set; }
         public bool RegistroForzado { get; set; }
         public bool ExamenMedico { get; set; }
+        public bool RetencionPendiente { get; set; }
 
         [JsonIgnore]
         public string EstadoDerecho => TieneDerechoADespensa ? "✓ CON DERECHO" : "⚠️ SIN DERECHO";

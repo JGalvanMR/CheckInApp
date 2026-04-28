@@ -74,6 +74,128 @@ namespace CheckInApp.ViewModels
                 {
                     PickerTitle = "Selecciona el archivo Excel",
                     FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
+            {
+                { DevicePlatform.WinUI,    new[] { ".xlsx", ".xls" } },
+                { DevicePlatform.macOS,    new[] { ".xlsx", ".xls" } },
+                { DevicePlatform.Android,  new[] { "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" } },
+                { DevicePlatform.iOS,      new[] { "org.openxmlformats.spreadsheetml.sheet" } }
+            })
+                });
+
+                if (resultado != null)
+                {
+                    using var stream = await resultado.OpenReadAsync();
+                    using var workbook = new XLWorkbook(stream);
+
+                    // Nombres actualizados de las hojas
+                    var hojaTodoPersonal = workbook.Worksheet("TODO EL PERSONAL DE PLANTA");
+                    var hojaConDespensa = workbook.Worksheet("CON DERECHO A DESPENSA");
+                    var hojaRetenerDespensa = workbook.Worksheet("PARA RETENER DESPENSA");
+
+                    if (hojaTodoPersonal == null || hojaConDespensa == null)
+                    {
+                        StatusMessage = "❌ Error: No se encontraron las hojas requeridas en el Excel";
+                        return;
+                    }
+
+                    // Códigos con derecho pleno
+                    var codigosConDespensa = new HashSet<string>();
+                    foreach (var row in hojaConDespensa.RowsUsed().Skip(1))
+                    {
+                        var cb = row.Cell(3).GetString()?.Trim();
+                        var nombre = row.Cell(4).GetString()?.Trim();
+                        if (!string.IsNullOrWhiteSpace(cb) &&
+                            !cb.ToUpper().Contains("CODIGO") &&
+                            !string.IsNullOrWhiteSpace(nombre) &&
+                            !nombre.ToUpper().Contains("NOMBRE"))
+                            codigosConDespensa.Add(cb);
+                    }
+
+                    // Códigos con derecho pero con retención por examen médico pendiente
+                    var codigosRetencion = new HashSet<string>();
+                    if (hojaRetenerDespensa != null)
+                    {
+                        foreach (var row in hojaRetenerDespensa.RowsUsed().Skip(1))
+                        {
+                            var cb = row.Cell(3).GetString()?.Trim();
+                            var nombre = row.Cell(4).GetString()?.Trim();
+                            if (!string.IsNullOrWhiteSpace(cb) &&
+                                !cb.ToUpper().Contains("CODIGO") &&
+                                !string.IsNullOrWhiteSpace(nombre) &&
+                                !nombre.ToUpper().Contains("NOMBRE"))
+                                codigosRetencion.Add(cb);
+                        }
+                    }
+
+                    var data = new List<QrResult>();
+                    foreach (var row in hojaTodoPersonal.RowsUsed().Skip(1))
+                    {
+                        try
+                        {
+                            var nomina = row.Cell(1).GetValue<int>();
+                            var codigo = row.Cell(2).GetFormattedString().Trim();
+                            var codigoBarras = row.Cell(3).GetFormattedString().Trim();
+                            var nombre = row.Cell(4).GetString()?.Trim();
+                            var supervisor = row.Cell(5).GetString()?.Trim();
+                            var departamento = row.Cell(6).GetString()?.Trim();
+
+                            // Ya no existe columna 7 de examen médico; se deriva de las listas
+                            if (string.IsNullOrWhiteSpace(nombre) ||
+                                nombre.ToUpper().Contains("NOMBRE") ||
+                                codigoBarras?.ToUpper().Contains("CODIGO") == true)
+                                continue;
+
+                            bool tieneDerecho = codigosConDespensa.Contains(codigoBarras)
+                                                || codigosRetencion.Contains(codigoBarras);
+                            bool examenMedicoOk = !codigosRetencion.Contains(codigoBarras);
+
+                            data.Add(new QrResult
+                            {
+                                Nomina = nomina,
+                                Codigo = codigo,
+                                CodigoBarras = codigoBarras,
+                                Nombre = nombre,
+                                Supervisor = supervisor,
+                                Departamento = departamento,
+                                ExamenMedico = examenMedicoOk,
+                                TieneDerechoADespensa = tieneDerecho,
+                                // Propiedad opcional para indicar si requiere forzar registro
+                                // (pendiente de examen médico)
+                                RetencionPendiente = codigosRetencion.Contains(codigoBarras),
+                                FileName = resultado.FileName,
+                                Timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                            });
+                        }
+                        catch { continue; }
+                    }
+
+                    await CargarAsistencia(data);
+
+                    Invitados.Clear();
+                    foreach (var item in data.OrderBy(i => i.Nombre))
+                        Invitados.Add(item);
+
+                    var conDespensa = data.Count(x => x.TieneDerechoADespensa);
+                    var sinDespensa = data.Count(x => !x.TieneDerechoADespensa);
+                    var pendientesMedico = data.Count(x => x.RetencionPendiente);
+                    StatusMessage = $"✅ {Invitados.Count} empleados cargados | Con despensa: {conDespensa} | Sin despensa: {sinDespensa} | Pendientes médico: {pendientesMedico}";
+                    FiltrarInvitados();
+                }
+            }
+            catch (Exception ex) { StatusMessage = $"❌ Error: {ex.Message}"; }
+            finally { IsLoading = false; }
+        }
+        private async Task CargarExcelLEGACY()
+        {
+            try
+            {
+                IsLoading = true;
+                StatusMessage = "Cargando archivo Excel...";
+
+                var resultado = await FilePicker.PickAsync(new PickOptions
+                {
+                    PickerTitle = "Selecciona el archivo Excel",
+                    FileTypes = new FilePickerFileType(new Dictionary<DevicePlatform, IEnumerable<string>>
                     {
                         { DevicePlatform.WinUI,    new[] { ".xlsx", ".xls" } },
                         { DevicePlatform.macOS,    new[] { ".xlsx", ".xls" } },
