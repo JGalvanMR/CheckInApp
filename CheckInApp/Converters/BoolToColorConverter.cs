@@ -6,15 +6,16 @@ namespace CheckInApp.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool boolValue)
+            bool isTrue = value is bool b && b;
+            string type = parameter as string;
+
+            return type switch
             {
-                //return boolValue ? Color.FromArgb("#C8E6C9") : Color.FromArgb("#FFECB3");
-                return boolValue
-                ? Color.FromArgb("#E8F5E9") // Verde corporativo claro
-                : Color.FromArgb("#FFF3E0"); // Naranja corporativo claro
-            }
-            //return Color.FromArgb("#FFECB3");
-            return Color.FromArgb("#FFECB3");
+                "Background" => isTrue ? Color.FromArgb("#DCFCE7") : Color.FromArgb("#FFEDD5"),
+                "Indicator" => isTrue ? Color.FromArgb("#22C55E") : Color.FromArgb("#F97316"),
+                "Text" => isTrue ? Color.FromArgb("#166534") : Color.FromArgb("#9A3412"),
+                _ => Color.FromArgb("#CBD5E1")
+            };
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -7,11 +7,11 @@
              x:Class="CheckInApp.MainPage"
              Title="Check-In Empleados"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="#F0F4F8">
+             BackgroundColor="#F5F7FA">
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <!--  ── Material / Brand Colors ──  -->
+            <!--  Material Design 3 Inspired Color Palette  -->
             <Color x:Key="Primary">#6750A4</Color>
             <Color x:Key="OnPrimary">#FFFFFF</Color>
             <Color x:Key="PrimaryContainer">#EADDFF</Color>
@@ -40,20 +40,22 @@
             <Color x:Key="Shadow">#000000</Color>
             <Color x:Key="SurfaceTint">#6750A4</Color>
             <Color x:Key="Scrim">#000000</Color>
-            <!--  ── HR Corporate Palette ──  -->
+
+            <!--  Corporate HR Color System  -->
             <Color x:Key="HRPrimary">#1A4B7A</Color>
             <Color x:Key="HRPrimaryDark">#0F2E4D</Color>
             <Color x:Key="HRPrimaryLight">#2563A8</Color>
             <Color x:Key="HRAccent">#E07B1A</Color>
             <Color x:Key="HRAccentLight">#F0922A</Color>
-            <Color x:Key="PageBg">#F0F4F8</Color>
+            <Color x:Key="PageBg">#F5F7FA</Color>
             <Color x:Key="CardBg">#FFFFFF</Color>
-            <Color x:Key="CardBorder">#E2E8F0</Color>
+            <Color x:Key="CardBorder">#E8ECF0</Color>
             <Color x:Key="HeaderText">#0F2E4D</Color>
             <Color x:Key="BodyText">#334155</Color>
             <Color x:Key="MutedText">#64748B</Color>
-            <Color x:Key="DividerColor">#E2E8F0</Color>
-            <!--  ── Status Colors ──  -->
+            <Color x:Key="DividerColor">#E8ECF0</Color>
+
+            <!--  Status Color System  -->
             <Color x:Key="SuccessGreen">#15803D</Color>
             <Color x:Key="SuccessBg">#DCFCE7</Color>
             <Color x:Key="SuccessBorder">#86EFAC</Color>
@@ -68,14 +70,16 @@
             <Color x:Key="InfoBorder">#93C5FD</Color>
             <Color x:Key="NeutralBg">#F1F5F9</Color>
             <Color x:Key="NeutralBorder">#CBD5E1</Color>
-            <!--  ── Semantic (kept for converters) ──  -->
+
+            <!--  Semantic Colors  -->
             <Color x:Key="Success">#4CAF50</Color>
             <Color x:Key="OnSuccess">#FFFFFF</Color>
             <Color x:Key="Warning">#FF9800</Color>
             <Color x:Key="OnWarning">#FFFFFF</Color>
             <Color x:Key="Info">#2196F3</Color>
             <Color x:Key="OnInfo">#FFFFFF</Color>
-            <!--  ── Gradients ──  -->
+
+            <!--  Gradient Brushes  -->
             <LinearGradientBrush x:Key="SuccessGradient" StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Offset="0" Color="#4CAF50" />
                 <GradientStop Offset="1" Color="#81C784" />
@@ -129,71 +133,82 @@
                 <GradientStop Offset="0.8" Color="#E07B1A" />
                 <GradientStop Offset="1" Color="Transparent" />
             </LinearGradientBrush>
-            <!--  ── Shadows ──  -->
+
+            <!--  Shadow Definitions  -->
             <Shadow x:Key="SubtleShadow"
                     Brush="#0F2E4D"
-                    Opacity="0.04"
-                    Radius="4"
+                    Opacity="0.02"
+                    Radius="3"
                     Offset="0,1" />
             <Shadow x:Key="Elevation1"
                     Brush="#0F2E4D"
-                    Opacity="0.07"
-                    Radius="8"
+                    Opacity="0.05"
+                    Radius="5"
                     Offset="0,2" />
             <Shadow x:Key="Elevation2"
                     Brush="#0F2E4D"
-                    Opacity="0.10"
-                    Radius="16"
-                    Offset="0,4" />
+                    Opacity="0.07"
+                    Radius="10"
+                    Offset="0,3" />
             <Shadow x:Key="Elevation3"
                     Brush="#0F2E4D"
-                    Opacity="0.14"
-                    Radius="24"
-                    Offset="0,8" />
+                    Opacity="0.09"
+                    Radius="16"
+                    Offset="0,5" />
             <Shadow x:Key="CardHoverShadow"
                     Brush="#0F2E4D"
-                    Opacity="0.12"
-                    Radius="12"
-                    Offset="0,3" />
-            <!--  ── Styles ──  -->
+                    Opacity="0.06"
+                    Radius="8"
+                    Offset="0,2" />
+
+            <!--  Base Card Style  -->
             <Style x:Key="CardStyle" TargetType="Border">
                 <Setter Property="BackgroundColor" Value="{StaticResource CardBg}" />
                 <Setter Property="Stroke" Value="{StaticResource CardBorder}" />
                 <Setter Property="StrokeThickness" Value="0.5" />
-                <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 12" />
                 <Setter Property="Shadow" Value="{StaticResource Elevation1}" />
             </Style>
+
+            <!--  KPI Card Style  -->
             <Style x:Key="StatCardStyle" TargetType="Border">
-                <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+                <Setter Property="StrokeShape" Value="RoundRectangle 12" />
                 <Setter Property="StrokeThickness" Value="0.5" />
                 <Setter Property="Stroke" Value="{StaticResource CardBorder}" />
                 <Setter Property="Shadow" Value="{StaticResource Elevation1}" />
                 <Setter Property="Padding" Value="0" />
             </Style>
+
+            <!--  Filter Button Style  -->
             <Style x:Key="FilterButtonStyle" TargetType="Button">
-                <Setter Property="CornerRadius" Value="8" />
-                <Setter Property="FontSize" Value="12" />
-                <Setter Property="HeightRequest" Value="36" />
+                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="FontSize" Value="11" />
+                <Setter Property="HeightRequest" Value="34" />
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="CharacterSpacing" Value="0.3" />
                 <Setter Property="Padding" Value="0" />
             </Style>
+
+            <!--  Action Button Style  -->
             <Style x:Key="ActionBtnStyle" TargetType="Button">
-                <Setter Property="CornerRadius" Value="12" />
-                <Setter Property="HeightRequest" Value="50" />
-                <Setter Property="FontSize" Value="12" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="HeightRequest" Value="48" />
+                <Setter Property="FontSize" Value="11" />
                 <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="CharacterSpacing" Value="0.4" />
+                <Setter Property="CharacterSpacing" Value="0.3" />
                 <Setter Property="Shadow" Value="{StaticResource Elevation1}" />
                 <Setter Property="Padding" Value="0" />
             </Style>
+
+            <!--  Section Title Style  -->
             <Style x:Key="SectionTitleStyle" TargetType="Label">
-                <Setter Property="FontSize" Value="11" />
+                <Setter Property="FontSize" Value="10" />
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="TextColor" Value="{StaticResource MutedText}" />
-                <Setter Property="CharacterSpacing" Value="1.2" />
+                <Setter Property="CharacterSpacing" Value="1.0" />
             </Style>
-            <!--  ── Converters ──  -->
+
+            <!--  Converters  -->
             <converters:BoolToColorConverter x:Key="BoolToColorConverter" />
             <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
             <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
@@ -207,23 +222,23 @@
 
     <Grid RowDefinitions="Auto, Auto, Auto, Auto, *, Auto, Auto" RowSpacing="0">
 
-        <!--  ══════════════════════════════════════════════════════════════  -->
-        <!--  HEADER — Barra corporativa HR refinada  -->
-        <!--  ══════════════════════════════════════════════════════════════  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
+        <!--  HEADER — Compact Header for Mobile (1080x2336)  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
         <Grid Grid.Row="0">
             <Border Padding="0" StrokeThickness="0">
                 <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0.2">
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0.15">
                         <GradientStop Offset="0.0" Color="#081726" />
-                        <GradientStop Offset="0.3" Color="#0F2E4D" />
+                        <GradientStop Offset="0.35" Color="#0F2E4D" />
                         <GradientStop Offset="0.7" Color="#1A4B7A" />
                         <GradientStop Offset="1.0" Color="#1E5490" />
                     </LinearGradientBrush>
                 </Border.Background>
-                <Grid RowDefinitions="Auto, 2.5">
-                    <!--  Patrón decorativo sutil en el fondo  -->
+                <Grid RowDefinitions="Auto, 2">
+                    <!--  Subtle Pattern Overlay  -->
                     <BoxView Grid.RowSpan="2"
-                             Opacity="0.03"
+                             Opacity="0.02"
                              HorizontalOptions="Fill"
                              VerticalOptions="Fill">
                         <BoxView.Background>
@@ -234,10 +249,11 @@
                             </LinearGradientBrush>
                         </BoxView.Background>
                     </BoxView>
-                    <Grid Padding="20,44,20,18" ColumnDefinitions="*, Auto">
-                        <!--  Lado izquierdo: Título con jerarquía refinada  -->
+                    <!--  Header Content  -->
+                    <Grid Padding="16,44,16,14" ColumnDefinitions="*, Auto">
+                        <!--  Left: Title  -->
                         <VerticalStackLayout Grid.Column="0"
-                                             Spacing="2"
+                                             Spacing="1"
                                              VerticalOptions="Center">
                             <HorizontalStackLayout Spacing="8">
                                 <Border WidthRequest="3"
@@ -247,43 +263,31 @@
                                         VerticalOptions="Center"
                                         StrokeShape="RoundRectangle 1.5" />
                                 <Label Text="RECURSOS HUMANOS"
-                                       FontSize="8.5"
+                                       FontSize="8"
                                        FontAttributes="Bold"
                                        TextColor="#7DB8E0"
-                                       CharacterSpacing="2.5" />
+                                       CharacterSpacing="2" />
                             </HorizontalStackLayout>
-                            <Label Margin="0,2,0,0"
+                            <Label Margin="0,3,0,0"
                                    Text="Control de Asistencia"
-                                   FontSize="21"
+                                   FontSize="18"
                                    FontAttributes="Bold"
                                    TextColor="#FFFFFF"
-                                   CharacterSpacing="0.2">
-                                <Label.Shadow>
-                                    <Shadow Brush="#000000"
-                                            Opacity="0.3"
-                                            Radius="6"
-                                            Offset="0,2" />
-                                </Label.Shadow>
-                            </Label>
-                            <Label Text="Check-In Industrial de Personal"
-                                   FontSize="11"
-                                   TextColor="#8FBDD9"
-                                   CharacterSpacing="0.3"
-                                   Opacity="0.9" />
+                                   CharacterSpacing="0.2" />
                         </VerticalStackLayout>
-                        <!--  Lado derecho: badge sistema activo — diseño pulido  -->
+                        <!--  Right: System Status Badge  -->
                         <Border Grid.Column="1"
-                                Padding="12,8"
+                                Padding="10,7"
                                 BackgroundColor="#0D2439"
                                 Stroke="#1A4B7A"
                                 StrokeThickness="1"
                                 StrokeShape="RoundRectangle 10"
                                 VerticalOptions="Center"
                                 Shadow="{StaticResource SubtleShadow}">
-                            <HorizontalStackLayout Spacing="8"
+                            <HorizontalStackLayout Spacing="6"
                                                    HorizontalOptions="Center"
                                                    VerticalOptions="Center">
-                                <!--  Indicador pulsante  -->
+                                <!--  Pulsing Indicator  -->
                                 <Border WidthRequest="8"
                                         HeightRequest="8"
                                         BackgroundColor="#4ADE80"
@@ -293,25 +297,25 @@
                                         VerticalOptions="Center">
                                     <Border.Shadow>
                                         <Shadow Brush="#4ADE80"
-                                                Opacity="0.6"
-                                                Radius="6"
+                                                Opacity="0.4"
+                                                Radius="4"
                                                 Offset="0,0" />
                                     </Border.Shadow>
                                 </Border>
                                 <VerticalStackLayout Spacing="1">
                                     <Label Text="EN LÍNEA"
-                                           FontSize="9"
+                                           FontSize="8"
                                            FontAttributes="Bold"
                                            TextColor="#4ADE80"
-                                           CharacterSpacing="1.2" />
-                                    <Label Text="Sistema Activo"
-                                           FontSize="7.5"
+                                           CharacterSpacing="1" />
+                                    <Label Text="Activo"
+                                           FontSize="7"
                                            TextColor="#7DB8E0" />
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
                         </Border>
                     </Grid>
-                    <!--  Línea de acento inferior — gradiente que se desvanece en los bordes  -->
+                    <!--  Accent Line  -->
                     <BoxView Grid.Row="1"
                              HorizontalOptions="Fill"
                              VerticalOptions="Fill"
@@ -320,16 +324,19 @@
             </Border>
         </Grid>
 
-        <!--  ══════════════════════════════════════════════════════════════  -->
-        <!--  ESTADÍSTICAS — 4 KPI cards enterprise refinadas  -->
-        <!--  ══════════════════════════════════════════════════════════════  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
+        <!--  KPI CARDS — 2x2 Grid Optimized for Mobile  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
         <Grid Grid.Row="1"
-              Margin="16,14,16,0"
-              ColumnDefinitions="*, *, *, *"
-              ColumnSpacing="10">
-
+              Margin="7,6,7,0"
+              ColumnDefinitions="*, *"
+              RowDefinitions="Auto, Auto"
+              ColumnSpacing="5"
+              RowSpacing="5">
             <!--  KPI: PRESENTES  -->
-            <Border Grid.Column="0" Style="{StaticResource StatCardStyle}">
+            <Border Grid.Row="0"
+                    Grid.Column="0"
+                    Style="{StaticResource StatCardStyle}">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                         <GradientStop Offset="0" Color="#F0FDF4" />
@@ -337,38 +344,38 @@
                     </LinearGradientBrush>
                 </Border.Background>
                 <Grid>
-                    <!--  Barra superior sutil con degradado  -->
-                    <Border HeightRequest="3.5"
+                    <Border HeightRequest="3"
                             HorizontalOptions="Fill"
                             VerticalOptions="Start"
                             StrokeThickness="0"
-                            BackgroundColor="#15803D"
-                            StrokeShape="RoundRectangle 14,14,0,0" />
-                    <VerticalStackLayout Padding="12,18,12,14" Spacing="6">
+                            BackgroundColor="#22C55E"
+                            StrokeShape="RoundRectangle 12,12,0,0" />
+                    <VerticalStackLayout Padding="6,7,6,6" Spacing="2">
                         <Label Text="{Binding TotalAsistentes}"
-                               FontSize="32"
+                               FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="#15803D"
+                               TextColor="#16A34A"
                                HorizontalOptions="Start"
-                               LineHeight="0.9" />
-                        <Border HeightRequest="2.5"
-                                WidthRequest="24"
+                               LineHeight="1" />
+                        <Border HeightRequest="2"
+                                WidthRequest="20"
                                 HorizontalOptions="Start"
                                 BackgroundColor="#BBF7D0"
                                 StrokeThickness="0"
-                                StrokeShape="RoundRectangle 1.25" />
+                                StrokeShape="RoundRectangle 1" />
                         <Label Text="PRESENTES"
-                               FontSize="8.5"
+                               FontSize="8"
                                FontAttributes="Bold"
                                TextColor="{StaticResource MutedText}"
-                               CharacterSpacing="1.0" />
+                               CharacterSpacing="1" />
                     </VerticalStackLayout>
                 </Grid>
             </Border>
 
-            <!--  KPI: TOTAL  -->
-            <Border Grid.Column="1" Style="{StaticResource StatCardStyle}">
-
+            <!--  KPI: TOTAL EMPLEADOS  -->
+            <Border Grid.Row="0"
+                    Grid.Column="1"
+                    Style="{StaticResource StatCardStyle}">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                         <GradientStop Offset="0" Color="#EFF6FF" />
@@ -376,37 +383,38 @@
                     </LinearGradientBrush>
                 </Border.Background>
                 <Grid>
-                    <Border HeightRequest="3.5"
+                    <Border HeightRequest="3"
                             HorizontalOptions="Fill"
                             VerticalOptions="Start"
                             StrokeThickness="0"
-                            BackgroundColor="#1A4B7A"
-                            StrokeShape="RoundRectangle 14,14,0,0" />
-                    <VerticalStackLayout Padding="12,18,12,14" Spacing="6">
+                            BackgroundColor="#3B82F6"
+                            StrokeShape="RoundRectangle 12,12,0,0" />
+                    <VerticalStackLayout Padding="6,7,6,6" Spacing="2">
                         <Label Text="{Binding TotalInvitados}"
-                               FontSize="32"
+                               FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="#1A4B7A"
+                               TextColor="#2563A8"
                                HorizontalOptions="Start"
-                               LineHeight="0.9" />
-                        <Border HeightRequest="2.5"
-                                WidthRequest="24"
+                               LineHeight="1" />
+                        <Border HeightRequest="2"
+                                WidthRequest="20"
                                 HorizontalOptions="Start"
                                 BackgroundColor="#BFDBFE"
                                 StrokeThickness="0"
-                                StrokeShape="RoundRectangle 1.25" />
+                                StrokeShape="RoundRectangle 1" />
                         <Label Text="TOTAL EMP."
-                               FontSize="8.5"
+                               FontSize="8"
                                FontAttributes="Bold"
                                TextColor="{StaticResource MutedText}"
-                               CharacterSpacing="1.0" />
+                               CharacterSpacing="1" />
                     </VerticalStackLayout>
                 </Grid>
             </Border>
 
             <!--  KPI: % ASISTENCIA  -->
-            <Border Grid.Column="2" Style="{StaticResource StatCardStyle}">
-
+            <Border Grid.Row="1"
+                    Grid.Column="0"
+                    Style="{StaticResource StatCardStyle}">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                         <GradientStop Offset="0" Color="#FFF7ED" />
@@ -414,36 +422,38 @@
                     </LinearGradientBrush>
                 </Border.Background>
                 <Grid>
-                    <Border HeightRequest="3.5"
+                    <Border HeightRequest="3"
                             HorizontalOptions="Fill"
                             VerticalOptions="Start"
                             StrokeThickness="0"
-                            BackgroundColor="#E07B1A"
-                            StrokeShape="RoundRectangle 14,14,0,0" />
-                    <VerticalStackLayout Padding="12,18,12,14" Spacing="6">
+                            BackgroundColor="#F97316"
+                            StrokeShape="RoundRectangle 12,12,0,0" />
+                    <VerticalStackLayout Padding="6,7,6,6" Spacing="2">
                         <Label Text="{Binding PorcentajeAsistencia}"
-                               FontSize="32"
+                               FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="#E07B1A"
+                               TextColor="#EA580C"
                                HorizontalOptions="Start"
-                               LineHeight="0.9" />
-                        <Border HeightRequest="2.5"
-                                WidthRequest="24"
+                               LineHeight="1" />
+                        <Border HeightRequest="2"
+                                WidthRequest="20"
                                 HorizontalOptions="Start"
                                 BackgroundColor="#FED7AA"
                                 StrokeThickness="0"
-                                StrokeShape="RoundRectangle 1.25" />
+                                StrokeShape="RoundRectangle 1" />
                         <Label Text="ASISTENCIA"
-                               FontSize="8.5"
+                               FontSize="8"
                                FontAttributes="Bold"
                                TextColor="{StaticResource MutedText}"
-                               CharacterSpacing="1.0" />
+                               CharacterSpacing="1" />
                     </VerticalStackLayout>
                 </Grid>
             </Border>
 
             <!--  KPI: PRECISIÓN  -->
-            <Border Grid.Column="3" Style="{StaticResource StatCardStyle}">
+            <Border Grid.Row="1"
+                    Grid.Column="1"
+                    Style="{StaticResource StatCardStyle}">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                         <GradientStop Offset="0" Color="#FAF5FF" />
@@ -451,42 +461,42 @@
                     </LinearGradientBrush>
                 </Border.Background>
                 <Grid>
-                    <Border HeightRequest="3.5"
+                    <Border HeightRequest="3"
                             HorizontalOptions="Fill"
                             VerticalOptions="Start"
                             StrokeThickness="0"
-                            BackgroundColor="#6D28D9"
-                            StrokeShape="RoundRectangle 14,14,0,0" />
-                    <VerticalStackLayout Padding="12,18,12,14" Spacing="6">
+                            BackgroundColor="#8B5CF6"
+                            StrokeShape="RoundRectangle 12,12,0,0" />
+                    <VerticalStackLayout Padding="6,7,6,6" Spacing="2">
                         <Label Text="{Binding PorcentajeAsistenciaDecimal}"
                                FontSize="20"
                                FontAttributes="Bold"
-                               TextColor="#6D28D9"
+                               TextColor="#7C3AED"
                                HorizontalOptions="Start"
                                VerticalOptions="Center"
-                               LineHeight="0.9" />
-                        <Border HeightRequest="2.5"
-                                WidthRequest="24"
+                               LineHeight="1" />
+                        <Border HeightRequest="2"
+                                WidthRequest="20"
                                 HorizontalOptions="Start"
                                 BackgroundColor="#DDD6FE"
                                 StrokeThickness="0"
-                                StrokeShape="RoundRectangle 1.25" />
+                                StrokeShape="RoundRectangle 1" />
                         <Label Text="PRECISIÓN"
-                               FontSize="8.5"
+                               FontSize="8"
                                FontAttributes="Bold"
                                TextColor="{StaticResource MutedText}"
-                               CharacterSpacing="1.0" />
+                               CharacterSpacing="1" />
                     </VerticalStackLayout>
                 </Grid>
             </Border>
         </Grid>
 
-        <!--  ══════════════════════════════════════════════════════════════  -->
-        <!--  BÚSQUEDA — Barra de búsqueda refinada  -->
-        <!--  ══════════════════════════════════════════════════════════════  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
+        <!--  SEARCH BAR — Compact Search for Mobile  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
         <Border Grid.Row="2"
-                Margin="16,12,16,0"
-                Padding="2"
+                Margin="7,6,7,0"
+                Padding="1"
                 BackgroundColor="#FFFFFF"
                 Stroke="{StaticResource NeutralBorder}"
                 StrokeThickness="1"
@@ -494,18 +504,18 @@
                 Shadow="{StaticResource Elevation1}">
             <Grid ColumnDefinitions="*, Auto" ColumnSpacing="0">
                 <SearchBar Grid.Column="0"
-                           Placeholder="Buscar por nombre, departamento o nómina..."
+                           Placeholder="Buscar por nombre, dept. o nómina..."
                            Text="{Binding TextoBusqueda}"
                            BackgroundColor="Transparent"
                            CancelButtonColor="{StaticResource HRPrimary}"
                            PlaceholderColor="#94A3B8"
                            TextColor="{StaticResource BodyText}"
-                           FontSize="13.5"
-                           HeightRequest="46">
+                           FontSize="13"
+                           HeightRequest="22">
                     <SearchBar.Margin>
                         <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS" Value="10,0,0,0" />
-                            <On Platform="Android" Value="4,0,0,0" />
+                            <On Platform="iOS" Value="5,0,0,0" />
+                            <On Platform="Android" Value="2,0,0,0" />
                         </OnPlatform>
                     </SearchBar.Margin>
                 </SearchBar>
@@ -515,8 +525,8 @@
                         BackgroundColor="{StaticResource NeutralBg}"
                         Stroke="{StaticResource NeutralBorder}"
                         StrokeThickness="0.5"
-                        WidthRequest="34"
-                        HeightRequest="34"
+                        WidthRequest="32"
+                        HeightRequest="32"
                         VerticalOptions="Center"
                         StrokeShape="RoundRectangle 8"
                         IsVisible="{Binding TextoBusqueda, Converter={StaticResource NullToBoolConverter}}">
@@ -525,75 +535,72 @@
                             Command="{Binding LimpiarBusquedaCommand}"
                             BackgroundColor="Transparent"
                             TextColor="{StaticResource MutedText}"
-                            FontSize="12"
-                            WidthRequest="34"
-                            HeightRequest="34"
+                            FontSize="11"
+                            WidthRequest="32"
+                            HeightRequest="32"
                             CornerRadius="8" />
                 </Border>
             </Grid>
         </Border>
 
-        <!--  ══════════════════════════════════════════════════════════════  -->
-        <!--  FILTROS — Segmented control enterprise  -->
-        <!--  ══════════════════════════════════════════════════════════════  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
+        <!--  FILTERS — Segmented Control  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
         <Border Grid.Row="3"
-                Margin="16,10,16,0"
-                Padding="4"
-                BackgroundColor="#F8FAFC"
-                Stroke="{StaticResource NeutralBorder}"
-                StrokeThickness="0.5"
-                StrokeShape="RoundRectangle 12"
+                Margin="14,8,14,0"
+                Padding="10,8"
+                Style="{StaticResource CardStyle}"
                 Shadow="{StaticResource SubtleShadow}">
-            <Grid ColumnDefinitions="*, *, *, Auto" ColumnSpacing="4">
+            <Grid ColumnDefinitions="*, *, *, Auto" ColumnSpacing="6">
                 <Button Grid.Column="0"
                         Text="Todos"
                         Command="{Binding FiltrarTodosCommand}"
                         BackgroundColor="{Binding FiltroSeleccionado, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Todos}"
-                        TextColor="Black"
+                        TextColor="#1E293B"
                         Style="{StaticResource FilterButtonStyle}" />
                 <Button Grid.Column="1"
                         Text="Presentes"
                         Command="{Binding FiltrarPresentesCommand}"
                         BackgroundColor="{Binding FiltroSeleccionado, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Presentes}"
-                        TextColor="Black"
+                        TextColor="#1E293B"
                         Style="{StaticResource FilterButtonStyle}" />
                 <Button Grid.Column="2"
                         Text="Ausentes"
                         Command="{Binding FiltrarAusentesCommand}"
                         BackgroundColor="{Binding FiltroSeleccionado, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Ausentes}"
-                        TextColor="Black"
+                        TextColor="#1E293B"
                         Style="{StaticResource FilterButtonStyle}" />
-                <!--  Badge contador — diseño minimalista  -->
+                <!--  Count Badge  -->
                 <Border Grid.Column="3"
-                        Padding="10,0"
+                        Padding="0"
                         BackgroundColor="Transparent"
                         StrokeThickness="0"
-                        HeightRequest="32"
+                        HeightRequest="30"
                         VerticalOptions="Center"
                         HorizontalOptions="End">
                     <Label Text="{Binding InvitadosFiltrados.Count, StringFormat='{0} reg.'}"
                            TextColor="{StaticResource MutedText}"
-                           FontSize="10.5"
+                           FontSize="10"
                            FontAttributes="Bold"
                            HorizontalOptions="Center"
                            VerticalOptions="Center"
-                           CharacterSpacing="0.3" />
+                           CharacterSpacing="0.2" />
                 </Border>
             </Grid>
         </Border>
 
-        <!--  ══════════════════════════════════════════════════════════════  -->
-        <!--  LISTA DE EMPLEADOS — Cards HR profesionales  -->
-        <!--  ══════════════════════════════════════════════════════════════  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
+        <!--  EMPLOYEE LIST — Main Scrollable Area  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
         <CollectionView Grid.Row="4"
-                        Margin="16,10,16,0"
+                        Margin="7,5,7,0"
                         ItemsSource="{Binding InvitadosFiltrados}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Vertical" ItemSpacing="6" />
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="0,1"
+                    <Border Margin="0,0,0,0"
                             Padding="0"
                             BackgroundColor="#FFFFFF"
                             Stroke="{StaticResource CardBorder}"
@@ -601,26 +608,26 @@
                             StrokeShape="RoundRectangle 12"
                             Shadow="{StaticResource CardHoverShadow}">
                         <Grid ColumnDefinitions="4, Auto, *, Auto">
-                            <!--  Indicador lateral de estado — más sutil  -->
+                            <!--  Status Indicator Bar  -->
                             <Border Grid.Column="0"
-                                    Margin="8,12,0,12"
-                                    BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}, ConverterParameter=ID}"
+                                    Margin="4,5,0,5"
+                                    BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Indicator}"
                                     StrokeThickness="0"
                                     WidthRequest="4"
                                     HorizontalOptions="Fill"
                                     VerticalOptions="Fill"
                                     StrokeShape="RoundRectangle 2" />
-                            <!--  Avatar: iniciales con borde sutil  -->
+                            <!--  Avatar  -->
                             <Border Grid.Column="1"
-                                    Margin="8,12,0,12"
+                                    Margin="4,5,0,5"
                                     Padding="0"
-                                    BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}, ConverterParameter=ID}"
-                                    HeightRequest="44"
-                                    WidthRequest="44"
+                                    BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Indicator}"
+                                    HeightRequest="42"
+                                    WidthRequest="42"
                                     VerticalOptions="Center"
                                     StrokeThickness="2"
                                     Stroke="#FFFFFF"
-                                    StrokeShape="RoundRectangle 22">
+                                    StrokeShape="RoundRectangle 21">
                                 <Label Text="{Binding Nomina}"
                                        TextColor="White"
                                        FontSize="10"
@@ -628,39 +635,39 @@
                                        HorizontalOptions="Center"
                                        VerticalOptions="Center" />
                             </Border>
-                            <!--  Datos principales del empleado  -->
+                            <!--  Employee Info  -->
                             <VerticalStackLayout Grid.Column="2"
-                                                 Padding="12,10,0,10"
-                                                 Spacing="3">
+                                                 Padding="5,5,0,5"
+                                                 Spacing="2">
                                 <Label Text="{Binding Nombre}"
                                        FontSize="14"
                                        FontAttributes="Bold"
                                        TextColor="{StaticResource HeaderText}"
                                        LineHeight="1.2" />
-                                <!--  Fila: departamento + separador + supervisor  -->
-                                <HorizontalStackLayout Spacing="6">
+                                <!--  Department & Supervisor Row  -->
+                                <HorizontalStackLayout Spacing="3">
                                     <Label Text="{Binding Departamento}"
-                                           FontSize="11.5"
+                                           FontSize="11"
                                            TextColor="{StaticResource MutedText}" />
                                     <Label Text="·"
-                                           FontSize="11.5"
+                                           FontSize="11"
                                            TextColor="#CBD5E1"
                                            IsVisible="{Binding Supervisor, Converter={StaticResource NullToBoolConverter}}" />
                                     <Label Text="{Binding Supervisor}"
-                                           FontSize="11.5"
+                                           FontSize="11"
                                            TextColor="#94A3B8"
                                            IsVisible="{Binding Supervisor, Converter={StaticResource NullToBoolConverter}}" />
                                 </HorizontalStackLayout>
-                                <!--  Hora de check-in (solo si asistió) — chip refinado  -->
-                                <Border Margin="0,2,0,0"
-                                        Padding="7,3"
+                                <!--  Check-in Time Chip  -->
+                                <Border Margin="0,3,0,0"
+                                        Padding="6,3"
                                         BackgroundColor="{StaticResource SuccessBg}"
                                         Stroke="{StaticResource SuccessBorder}"
                                         StrokeThickness="0.5"
                                         StrokeShape="RoundRectangle 5"
                                         HorizontalOptions="Start"
                                         IsVisible="{Binding Asistio}">
-                                    <Label Text="{Binding HoraCheckIn, StringFormat='✓  Ingreso: {0:HH:mm}'}"
+                                    <Label Text="{Binding HoraCheckIn, StringFormat='✓ {0:HH:mm}'}"
                                            FontSize="10"
                                            FontAttributes="Bold"
                                            TextColor="{StaticResource SuccessGreen}">
@@ -682,18 +689,18 @@
                                     </Border.Triggers>
                                 </Border>
                             </VerticalStackLayout>
-                            <!--  Badge derecho: estado de asistencia — diseño más limpio  -->
+                            <!--  Status Badge  -->
                             <Border Grid.Column="3"
-                                    Margin="0,0,14,0"
-                                    Padding="9,8"
-                                    BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Background}"
+                                    Margin="0,0,6,0"
+                                    Padding="4,4"
+                                    BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Indicator}"
                                     StrokeThickness="0"
                                     VerticalOptions="Center"
                                     HorizontalOptions="End"
                                     StrokeShape="RoundRectangle 10">
-                                <Label Text="{Binding RegistroForzado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='⚠️|✓'}"
+                                <Label Text="{Binding RegistroForzado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='⚠|✓'}"
                                        TextColor="{Binding RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Orange|Green'}"
-                                       FontSize="15"
+                                       FontSize="14"
                                        FontAttributes="Bold" />
                             </Border>
                         </Grid>
@@ -701,77 +708,69 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.EmptyView>
-                <VerticalStackLayout Padding="32,64"
+                <VerticalStackLayout Padding="12,24"
                                      HorizontalOptions="Center"
                                      VerticalOptions="Center"
-                                     Spacing="16">
-                    <!--  Icono vacío más elaborado  -->
-                    <Border Padding="24"
+                                     Spacing="8">
+                    <!--  Empty State Icon  -->
+                    <Border Padding="10"
                             BackgroundColor="#F8FAFC"
                             Stroke="{StaticResource NeutralBorder}"
                             StrokeThickness="1"
-                            StrokeShape="RoundRectangle 60"
+                            StrokeShape="RoundRectangle 50"
                             HorizontalOptions="Center"
                             Shadow="{StaticResource Elevation1}">
-                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
-                            <Label Text="○"
-                                   FontSize="32"
-                                   TextColor="#CBD5E1"
-                                   HorizontalOptions="Center" />
-                            <Label Margin="-18,0,0,0"
-                                   Text="○"
-                                   FontSize="32"
-                                   TextColor="#E2E8F0"
-                                   HorizontalOptions="Center"
-                                   Opacity="0.5" />
-                        </VerticalStackLayout>
+                        <Label Text="📋"
+                               FontSize="32"
+                               HorizontalOptions="Center" />
                     </Border>
-                    <Label Text="Sin resultados"
-                           FontSize="16"
-                           FontAttributes="Bold"
-                           TextColor="{StaticResource HeaderText}"
-                           HorizontalOptions="Center" />
-                    <Label Text="Ajusta los filtros o el término de búsqueda"
-                           FontSize="12.5"
-                           TextColor="{StaticResource MutedText}"
-                           HorizontalOptions="Center"
-                           HorizontalTextAlignment="Center"
-                           LineHeight="1.4" />
+                    <VerticalStackLayout Spacing="6" HorizontalOptions="Center">
+                        <Label Text="Sin resultados"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource HeaderText}"
+                               HorizontalOptions="Center" />
+                        <Label Text="Ajusta los filtros o búsqueda"
+                               FontSize="12"
+                               TextColor="{StaticResource MutedText}"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center" />
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
             </CollectionView.EmptyView>
         </CollectionView>
 
-        <!--  ══════════════════════════════════════════════════════════════  -->
-        <!--  BARRA DE ACCIONES — Toolbar HR corporativo refinado  -->
-        <!--  ══════════════════════════════════════════════════════════════  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
+        <!--  ACTION TOOLBAR — Compact Bottom Bar  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
         <Border Grid.Row="5"
-                Margin="16,10,16,0"
-                Padding="14,12"
+                Margin="14,10,14,0"
+                Padding="12,10"
                 BackgroundColor="#FFFFFF"
                 Stroke="{StaticResource CardBorder}"
                 StrokeThickness="0.5"
-                StrokeShape="RoundRectangle 14"
+                StrokeShape="RoundRectangle 12"
                 Shadow="{StaticResource Elevation2}">
-            <VerticalStackLayout Spacing="10">
-                <!--  Mensaje de estado — diseño más discreto  -->
+            <VerticalStackLayout Spacing="8">
+                <!--  Status Message  -->
                 <Border Padding="10,8"
                         BackgroundColor="#F8FAFC"
                         Stroke="{StaticResource NeutralBorder}"
                         StrokeThickness="0.5"
                         StrokeShape="RoundRectangle 8">
                     <Label Text="{Binding StatusMessage}"
-                           FontSize="11.5"
+                           FontSize="11"
                            HorizontalOptions="Center"
                            HorizontalTextAlignment="Center"
                            TextColor="{StaticResource MutedText}"
                            CharacterSpacing="0.1" />
                 </Border>
-                <!--  4 botones de acción — separación visual mejorada  -->
+                <!--  Action Buttons Grid  -->
                 <Grid ColumnDefinitions="*, *, *, *" ColumnSpacing="8">
-                    <!--  Cargar archivo  -->
+                    <!--  Load File  -->
                     <Border Grid.Column="0"
                             StrokeThickness="0"
-                            StrokeShape="RoundRectangle 12"
+                            StrokeShape="RoundRectangle 10"
                             Shadow="{StaticResource Elevation1}">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -779,16 +778,16 @@
                                 <GradientStop Offset="1" Color="#15803D" />
                             </LinearGradientBrush>
                         </Border.Background>
-                        <Button Text="📂  Cargar"
+                        <Button Text="📂"
                                 Command="{Binding CargarExcelCommand}"
                                 BackgroundColor="Transparent"
                                 TextColor="White"
                                 Style="{StaticResource ActionBtnStyle}" />
                     </Border>
-                    <!--  Escanear código  -->
+                    <!--  Scan QR  -->
                     <Border Grid.Column="1"
                             StrokeThickness="0"
-                            StrokeShape="RoundRectangle 12"
+                            StrokeShape="RoundRectangle 10"
                             Shadow="{StaticResource Elevation1}">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -796,16 +795,16 @@
                                 <GradientStop Offset="1" Color="#1A4B7A" />
                             </LinearGradientBrush>
                         </Border.Background>
-                        <Button Text="📷  Escanear"
+                        <Button Text="📷"
                                 Command="{Binding EscanearQRCommand}"
                                 BackgroundColor="Transparent"
                                 TextColor="White"
                                 Style="{StaticResource ActionBtnStyle}" />
                     </Border>
-                    <!--  Exportar reporte  -->
+                    <!--  Export Report  -->
                     <Border Grid.Column="2"
                             StrokeThickness="0"
-                            StrokeShape="RoundRectangle 12"
+                            StrokeShape="RoundRectangle 10"
                             Shadow="{StaticResource Elevation1}">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -813,16 +812,16 @@
                                 <GradientStop Offset="1" Color="#E07B1A" />
                             </LinearGradientBrush>
                         </Border.Background>
-                        <Button Text="📊  Exportar"
+                        <Button Text="📊"
                                 Command="{Binding ExportarReporteCommand}"
                                 BackgroundColor="Transparent"
                                 TextColor="White"
                                 Style="{StaticResource ActionBtnStyle}" />
                     </Border>
-                    <!--  Limpiar datos  -->
+                    <!--  Clear Data  -->
                     <Border Grid.Column="3"
                             StrokeThickness="0"
-                            StrokeShape="RoundRectangle 12"
+                            StrokeShape="RoundRectangle 10"
                             Shadow="{StaticResource Elevation1}">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -830,7 +829,7 @@
                                 <GradientStop Offset="1" Color="#DC2626" />
                             </LinearGradientBrush>
                         </Border.Background>
-                        <Button Text="🗑️  Limpiar"
+                        <Button Text="🗑️"
                                 Command="{Binding LimpiarAplicacionCommand}"
                                 BackgroundColor="Transparent"
                                 TextColor="White"
@@ -840,11 +839,11 @@
             </VerticalStackLayout>
         </Border>
 
-        <!--  ══════════════════════════════════════════════════════════════  -->
-        <!--  PANEL DE DETALLES DEL EMPLEADO — Ficha HR refinada  -->
-        <!--  ══════════════════════════════════════════════════════════════  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
+        <!--  DETAIL PANEL — Employee Detail Card (Bottom Sheet Style)  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
         <Border Grid.Row="6"
-                Margin="16,10,16,12"
+                Margin="7,5,7,6"
                 Padding="0"
                 IsVisible="{Binding MostrarDetalles}"
                 BackgroundColor="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FFFBF5|#F0FDF4'}"
@@ -853,119 +852,120 @@
                 StrokeShape="RoundRectangle 14"
                 Shadow="{StaticResource Elevation3}">
             <VerticalStackLayout>
-                <!--  Cabecera de resultado — gradiente sutil según estado  -->
-                <Border Padding="16,12"
+                <!--  Status Header  -->
+                <Border Padding="7,5"
                         StrokeThickness="0"
                         BackgroundColor="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FFF8F0|#F0FDF4'}">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="14,14,0,0" />
+                        <RoundRectangle CornerRadius="7,7,0,0" />
                     </Border.StrokeShape>
                     <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
-                        <Border WidthRequest="36"
-                                HeightRequest="36"
+                        <Border WidthRequest="32"
+                                HeightRequest="32"
                                 BackgroundColor="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FFF7ED|#DCFCE7'}"
                                 Stroke="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FDBA74|#86EFAC'}"
                                 StrokeThickness="1"
-                                StrokeShape="RoundRectangle 18"
+                                StrokeShape="RoundRectangle 16"
                                 VerticalOptions="Center">
-                            <Label Text="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='⚠️|✓'}"
-                                   FontSize="18"
+                            <Label Text="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='⚠|✓'}"
+                                   FontSize="16"
                                    HorizontalOptions="Center"
-                                   VerticalOptions="Center" />
+                                   VerticalOptions="Center"
+                                   TextColor="Black" />
                         </Border>
                         <Label Text="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='REGISTRO FORZADO|CHECK-IN REGISTRADO'}"
-                               FontSize="13"
+                               FontSize="12"
                                FontAttributes="Bold"
                                VerticalOptions="Center"
-                               CharacterSpacing="0.8"
+                               CharacterSpacing="0.5"
                                TextColor="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#C2410C|#15803D'}" />
                     </HorizontalStackLayout>
                 </Border>
-                <!--  Separador sutil  -->
+                <!--  Divider  -->
                 <BoxView HeightRequest="0.5"
-                         Opacity="0.6"
-                         Color="#E2E8F0" />
-                <!--  Cuerpo de la ficha  -->
-                <VerticalStackLayout Padding="18,16,18,18" Spacing="12">
-                    <!--  Nombre del empleado  -->
+                         Opacity="0.4"
+                         Color="#E8ECF0" />
+                <!--  Detail Body  -->
+                <VerticalStackLayout Padding="7,6,7,6" Spacing="5">
+                    <!--  Employee Name  -->
                     <Label Text="{Binding InvitadoSeleccionado.Nombre}"
-                           FontSize="18"
+                           FontSize="16"
                            FontAttributes="Bold"
                            TextColor="{StaticResource HeaderText}"
                            HorizontalOptions="Center"
                            CharacterSpacing="0.2" />
-                    <!--  Departamento · Supervisor — con separadores visuales  -->
-                    <Border Padding="12,8"
+                    <!--  Department & Supervisor  -->
+                    <Border Padding="5,4"
                             BackgroundColor="#F8FAFC"
                             Stroke="{StaticResource NeutralBorder}"
                             StrokeThickness="0.5"
                             StrokeShape="RoundRectangle 8"
                             HorizontalOptions="Center">
-                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="12">
+                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
                             <Label Text="{Binding InvitadoSeleccionado.Departamento}"
-                                   FontSize="12.5"
+                                   FontSize="11"
                                    TextColor="{StaticResource BodyText}" />
                             <BoxView WidthRequest="1"
-                                     HeightRequest="14"
+                                     HeightRequest="12"
                                      VerticalOptions="Center"
                                      Color="#CBD5E1" />
                             <Label Text="{Binding InvitadoSeleccionado.Supervisor}"
-                                   FontSize="12.5"
+                                   FontSize="11"
                                    TextColor="{StaticResource MutedText}" />
                         </HorizontalStackLayout>
                     </Border>
-                    <!--  Hora de registro — diseño de reloj sutil  -->
-                    <Border Padding="10,8"
+                    <!--  Check-in Time  -->
+                    <Border Padding="5,4"
                             BackgroundColor="#F1F5F9"
                             StrokeThickness="0"
                             StrokeShape="RoundRectangle 8"
                             HorizontalOptions="Center">
-                        <Label Text="{Binding InvitadoSeleccionado.HoraCheckIn, StringFormat='⏱   Hora de registro: {0:HH:mm:ss}'}"
-                               FontSize="12"
+                        <Label Text="{Binding InvitadoSeleccionado.HoraCheckIn, StringFormat='⏱ {0:HH:mm:ss}'}"
+                               FontSize="11"
                                FontAttributes="Bold"
                                TextColor="{StaticResource MutedText}"
                                HorizontalOptions="Center"
-                               CharacterSpacing="0.3" />
+                               CharacterSpacing="0.2" />
                     </Border>
-                    <!--  Chip de derecho a despensa — más prominente  -->
-                    <Border Padding="14,10"
+                    <!--  Benefit Status  -->
+                    <Border Padding="12,8"
                             BackgroundColor="{Binding InvitadoSeleccionado.TieneDerechoADespensa, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#DCFCE7|#FEE2E2'}"
                             Stroke="{Binding InvitadoSeleccionado.TieneDerechoADespensa, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#86EFAC|#FCA5A5'}"
-                            StrokeThickness="1"
-                            StrokeShape="RoundRectangle 10">
+                            StrokeThickness="0.5"
+                            StrokeShape="RoundRectangle 8">
                         <Label Text="{Binding InvitadoSeleccionado.EstadoDerecho}"
-                               FontSize="13"
+                               FontSize="12"
                                FontAttributes="Bold"
                                HorizontalOptions="Center"
                                TextColor="{Binding InvitadoSeleccionado.TieneDerechoADespensa, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#15803D|#B91C1C'}"
-                               CharacterSpacing="0.3" />
+                               CharacterSpacing="0.2" />
                     </Border>
-                    <!--  Aviso de registro forzado — banner de advertencia  -->
-                    <Border Padding="14,10"
+                    <!--  Forced Registration Warning  -->
+                    <Border Padding="10,8"
                             BackgroundColor="#FFFBEB"
                             Stroke="#FDE68A"
-                            StrokeThickness="1"
-                            StrokeShape="RoundRectangle 10"
+                            StrokeThickness="0.5"
+                            StrokeShape="RoundRectangle 8"
                             IsVisible="{Binding InvitadoSeleccionado.RegistroForzado}">
                         <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
                             <Label Text="⚠️"
-                                   FontSize="16"
+                                   FontSize="14"
                                    VerticalOptions="Center" />
-                            <Label Text="Empleado SIN DERECHO a despensa. Registro autorizado por operador."
-                                   FontSize="11"
+                            <Label Text="Sin derecho. Registro autorizado por operador."
+                                   FontSize="10"
                                    TextColor="#92400E"
                                    FontAttributes="Italic"
                                    VerticalOptions="Center"
-                                   LineHeight="1.3" />
+                                   LineHeight="1.2" />
                         </HorizontalStackLayout>
                     </Border>
-                    <!--  Acciones — botones con gradientes  -->
-                    <Grid Margin="0,4,0,0"
+                    <!--  Action Buttons  -->
+                    <Grid Margin="0,2,0,0"
                           ColumnDefinitions="*, *"
-                          ColumnSpacing="10">
+                          ColumnSpacing="8">
                         <Border Grid.Column="0"
                                 StrokeThickness="0"
-                                StrokeShape="RoundRectangle 12"
+                                StrokeShape="RoundRectangle 10"
                                 Shadow="{StaticResource Elevation1}">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -977,14 +977,14 @@
                                     Command="{Binding LimpiarResultadoCommand}"
                                     BackgroundColor="Transparent"
                                     TextColor="White"
-                                    CornerRadius="12"
+                                    CornerRadius="10"
                                     FontAttributes="Bold"
-                                    FontSize="13"
-                                    HeightRequest="48" />
+                                    FontSize="12"
+                                    HeightRequest="44" />
                         </Border>
                         <Border Grid.Column="1"
                                 StrokeThickness="0"
-                                StrokeShape="RoundRectangle 12"
+                                StrokeShape="RoundRectangle 10"
                                 Shadow="{StaticResource Elevation1}">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -996,28 +996,27 @@
                                     Command="{Binding ExportarReporteCommand}"
                                     BackgroundColor="Transparent"
                                     TextColor="White"
-                                    CornerRadius="12"
+                                    CornerRadius="10"
                                     FontAttributes="Bold"
-                                    FontSize="13"
-                                    HeightRequest="48" />
+                                    FontSize="12"
+                                    HeightRequest="44" />
                         </Border>
                     </Grid>
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </Border>
 
-        <!--  ══════════════════════════════════════════════════════════════  -->
-        <!--  LOADING OVERLAY — Modal corporativo refinado  -->
-        <!--  ══════════════════════════════════════════════════════════════  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
+        <!--  LOADING OVERLAY — Compact Loading Modal  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
         <Grid Grid.RowSpan="7"
               IsVisible="{Binding IsLoading}"
-              BackgroundColor="#99000000">
-            <!--  Blur de fondo simulado  -->
+              BackgroundColor="#CC000000">
             <BoxView HorizontalOptions="Fill"
                      VerticalOptions="Fill"
-                     Opacity="0.3"
+                     Opacity="0.2"
                      BackgroundColor="#0F2E4D" />
-            <Border Padding="40,32"
+            <Border Padding="32,28"
                     BackgroundColor="#FFFFFF"
                     Stroke="{StaticResource NeutralBorder}"
                     StrokeThickness="0.5"
@@ -1025,18 +1024,18 @@
                     HorizontalOptions="Center"
                     VerticalOptions="Center"
                     Shadow="{StaticResource Elevation3}">
-                <VerticalStackLayout Spacing="20" HorizontalOptions="Center">
-                    <!--  Spinner con contenedor  -->
-                    <Border WidthRequest="56"
-                            HeightRequest="56"
-                            BackgroundColor="#F0F4F8"
+                <VerticalStackLayout Spacing="16" HorizontalOptions="Center">
+                    <!--  Spinner Container  -->
+                    <Border WidthRequest="52"
+                            HeightRequest="52"
+                            BackgroundColor="#F8FAFC"
                             Stroke="{StaticResource NeutralBorder}"
                             StrokeThickness="0.5"
-                            StrokeShape="RoundRectangle 28"
+                            StrokeShape="RoundRectangle 26"
                             HorizontalOptions="Center">
                         <ActivityIndicator IsRunning="True"
-                                           HeightRequest="36"
-                                           WidthRequest="36"
+                                           HeightRequest="48"
+                                           WidthRequest="48"
                                            HorizontalOptions="Center"
                                            VerticalOptions="Center"
                                            Color="{StaticResource HRPrimary}" />
@@ -1048,38 +1047,38 @@
                                FontAttributes="Bold"
                                HorizontalOptions="Center"
                                CharacterSpacing="0.5" />
-                        <Label Text="Por favor espera un momento"
-                               TextColor="{StaticResource MutedText}"
+                        <Label Text="Por favor espera"
                                FontSize="11"
+                               TextColor="{StaticResource MutedText}"
                                HorizontalOptions="Center" />
                     </VerticalStackLayout>
                 </VerticalStackLayout>
             </Border>
         </Grid>
 
-        <!--  ══════════════════════════════════════════════════════════════  -->
-        <!--  QR SCANNER OVERLAY — Vista de cámara con HUD industrial pulido  -->
-        <!--  ══════════════════════════════════════════════════════════════  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
+        <!--  QR SCANNER OVERLAY — Full Screen Camera View  -->
+        <!--  ═══════════════════════════════════════════════════════════════  -->
         <Grid Grid.RowSpan="7"
               IsVisible="{Binding IsScanning}"
               BackgroundColor="#E6000000">
             <zxing:CameraBarcodeReaderView x:Name="barcodeReader"
                                            BarcodesDetected="BarcodesDetected"
                                            IsDetecting="True" />
-            <!--  Viñeta oscura en los bordes  -->
+            <!--  Edge Vignette  -->
             <Border HorizontalOptions="Fill"
                     VerticalOptions="Fill"
-                    StrokeThickness="40"
+                    StrokeThickness="45"
                     Stroke="#99000000"
                     StrokeShape="RoundRectangle 0"
                     BackgroundColor="Transparent" />
-            <!--  Badge superior con instrucción — más elegante  -->
+            <!--  Top Instruction Badge  -->
             <Border Margin="0,56,0,0"
-                    Padding="24,12"
-                    BackgroundColor="#E6FFFFFF"
-                    Stroke="#33FFFFFF"
+                    Padding="20,10"
+                    BackgroundColor="#F0FFFFFF"
+                    Stroke="#22FFFFFF"
                     StrokeThickness="0.5"
-                    StrokeShape="RoundRectangle 28"
+                    StrokeShape="RoundRectangle 24"
                     HorizontalOptions="Center"
                     VerticalOptions="Start"
                     Shadow="{StaticResource Elevation2}">
@@ -1094,7 +1093,7 @@
                             VerticalOptions="Center">
                         <Border.Shadow>
                             <Shadow Brush="#E07B1A"
-                                    Opacity="0.5"
+                                    Opacity="0.4"
                                     Radius="4"
                                     Offset="0,0" />
                         </Border.Shadow>
@@ -1104,37 +1103,34 @@
                                FontSize="9"
                                FontAttributes="Bold"
                                TextColor="{StaticResource HRPrimary}"
-                               CharacterSpacing="2.0" />
-                        <Label Text="Apunta la cámara al código del empleado"
-                               FontSize="11.5"
+                               CharacterSpacing="1.5" />
+                        <Label Text="Apunta al código QR del empleado"
+                               FontSize="11"
                                TextColor="{StaticResource BodyText}" />
                     </VerticalStackLayout>
                 </HorizontalStackLayout>
             </Border>
-            <!--  Marco de escaneo — rediseño más limpio  -->
+            <!--  Scan Frame  -->
             <Grid HorizontalOptions="Center"
                   VerticalOptions="Center"
                   HeightRequest="260"
                   WidthRequest="260">
-                <!--  Fondo interior muy sutil  -->
-                <Border BackgroundColor="#0AFFFFFF"
+                <!--  Inner Background  -->
+                <Border BackgroundColor="#08FFFFFF"
                         Stroke="Transparent"
                         StrokeThickness="0"
                         StrokeShape="RoundRectangle 20"
                         HorizontalOptions="Fill"
                         VerticalOptions="Fill" />
-                <!--  Marco exterior muy sutil  -->
+                <!--  Outer Frame  -->
                 <Border Stroke="#40FFFFFF"
                         StrokeThickness="0.5"
                         BackgroundColor="Transparent"
                         StrokeShape="RoundRectangle 20"
                         HorizontalOptions="Fill"
                         VerticalOptions="Fill" />
-                <!--  Esquinas HUD: estilo L con stroke rounded  -->
-                <!--  Superior-Izquierda  -->
-                <Border Margin="0"
-                        Padding="0"
-                        WidthRequest="36"
+                <!--  Corner: Top-Left  -->
+                <Border WidthRequest="36"
                         HeightRequest="36"
                         HorizontalOptions="Start"
                         VerticalOptions="Start"
@@ -1142,13 +1138,11 @@
                         StrokeThickness="3"
                         BackgroundColor="Transparent">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="4,0,0,0" />
+                        <RoundRectangle CornerRadius="5,0,0,0" />
                     </Border.StrokeShape>
                 </Border>
-                <!--  Superior-Derecha  -->
-                <Border Margin="0"
-                        Padding="0"
-                        WidthRequest="36"
+                <!--  Corner: Top-Right  -->
+                <Border WidthRequest="36"
                         HeightRequest="36"
                         HorizontalOptions="End"
                         VerticalOptions="Start"
@@ -1156,13 +1150,11 @@
                         StrokeThickness="3"
                         BackgroundColor="Transparent">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="0,4,0,0" />
+                        <RoundRectangle CornerRadius="0,5,0,0" />
                     </Border.StrokeShape>
                 </Border>
-                <!--  Inferior-Izquierda  -->
-                <Border Margin="0"
-                        Padding="0"
-                        WidthRequest="36"
+                <!--  Corner: Bottom-Left  -->
+                <Border WidthRequest="36"
                         HeightRequest="36"
                         HorizontalOptions="Start"
                         VerticalOptions="End"
@@ -1170,13 +1162,11 @@
                         StrokeThickness="3"
                         BackgroundColor="Transparent">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="0,0,0,4" />
+                        <RoundRectangle CornerRadius="0,0,0,5" />
                     </Border.StrokeShape>
                 </Border>
-                <!--  Inferior-Derecha  -->
-                <Border Margin="0"
-                        Padding="0"
-                        WidthRequest="36"
+                <!--  Corner: Bottom-Right  -->
+                <Border WidthRequest="36"
                         HeightRequest="36"
                         HorizontalOptions="End"
                         VerticalOptions="End"
@@ -1184,36 +1174,36 @@
                         StrokeThickness="3"
                         BackgroundColor="Transparent">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="0,0,4,0" />
+                        <RoundRectangle CornerRadius="0,0,5,0" />
                     </Border.StrokeShape>
                 </Border>
-                <!--  Línea de escaneo — gradiente más suave  -->
+                <!--  Scan Line  -->
                 <BoxView HeightRequest="1.5"
                          HorizontalOptions="Fill"
                          VerticalOptions="Center"
                          Opacity="0.7"
                          Background="{StaticResource ScannerLineGradient}" />
             </Grid>
-            <!--  Botón cancelar — diseño más refinado  -->
-            <Border Margin="0,0,0,56"
+            <!--  Cancel Button  -->
+            <Border Margin="0,0,0,48"
                     Padding="0"
-                    BackgroundColor="#E6FFFFFF"
-                    Stroke="#33FFFFFF"
+                    BackgroundColor="#F0FFFFFF"
+                    Stroke="#22FFFFFF"
                     StrokeThickness="0.5"
-                    StrokeShape="RoundRectangle 28"
+                    StrokeShape="RoundRectangle 26"
                     HorizontalOptions="Center"
                     VerticalOptions="End"
                     Shadow="{StaticResource Elevation2}">
-                <Button Text="✕   Cancelar"
+                <Button Text="✕ Cancelar"
                         Clicked="OnCancelScanClicked"
                         BackgroundColor="Transparent"
                         TextColor="{StaticResource DangerRed}"
                         CornerRadius="26"
-                        WidthRequest="160"
-                        HeightRequest="50"
+                        WidthRequest="150"
+                        HeightRequest="52"
                         FontAttributes="Bold"
-                        FontSize="13.5"
-                        CharacterSpacing="0.5" />
+                        FontSize="13"
+                        CharacterSpacing="0.3" />
             </Border>
         </Grid>
 
