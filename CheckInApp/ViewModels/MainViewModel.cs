@@ -1,13 +1,16 @@
-﻿using CheckInApp.Models;
+﻿using CheckInApp.Converters;
+using CheckInApp.Models;
+using ClosedXML.Excel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Maui.ApplicationModel.DataTransfer;
+using Microsoft.Maui.Media;
 using Newtonsoft.Json;
 using System.Collections.ObjectModel;
-using System.Text;
-using Microsoft.Maui.Media;
-using Microsoft.Maui.ApplicationModel.DataTransfer;
 using System.Globalization;
-using ClosedXML.Excel;
+using System.Text;
+using System.Windows.Input;
 
 namespace CheckInApp.ViewModels
 {
@@ -1418,6 +1421,16 @@ namespace CheckInApp.ViewModels
             }
             catch (Exception ex) { StatusMessage = $"❌ Error: {ex.Message}"; }
             finally { IsLoading = false; }
-        }
+        }  
+
+        public ICommand MostrarDetallesCommand => new Command(() =>
+        {
+            MostrarDetalles = true;
+        });
+
+        public ICommand CerrarDetallesCommand => new Command(() =>
+        {
+            MostrarDetalles = false;
+        });
     }
 }
