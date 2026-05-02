@@ -630,7 +630,7 @@
                             <!--  Status Indicator Bar  -->
                             <Border Grid.Column="0"
                                     Margin="4,5,0,5"
-                                    BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Indicator}"
+                                    BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Background'}"
                                     StrokeThickness="0"
                                     WidthRequest="4"
                                     HorizontalOptions="Fill"
@@ -640,7 +640,7 @@
                             <Border Grid.Column="1"
                                     Margin="4,5,0,5"
                                     Padding="0"
-                                    BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Indicator}"
+                                    BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Indicator'}"
                                     HeightRequest="42"
                                     WidthRequest="42"
                                     VerticalOptions="Center"
@@ -712,13 +712,13 @@
                             <Border Grid.Column="3"
                                     Margin="0,0,5,0"
                                     Padding="5,4"
-                                    BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}, ConverterParameter=Indicator}"
+                                    BackgroundColor="{Binding Asistio, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Background'}"
                                     StrokeThickness="0"
                                     VerticalOptions="Center"
                                     HorizontalOptions="End"
                                     StrokeShape="RoundRectangle 8">
-                                <Label Text="{Binding RegistroForzado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='⚠|✓'}"
-                                       TextColor="{Binding RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Orange|Green'}"
+                                <Label Text="{Binding RegistroForzado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='⚠,⏳,✓'}"
+                                       TextColor="{Binding RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Indicator'}"
                                        FontSize="13"
                                        FontAttributes="Bold" />
                             </Border>
@@ -762,7 +762,8 @@
         <!--  ═══════════════════════════════════════════════════════════════  -->
         <!--  ACTION TOOLBAR — Compact Bottom Bar  -->
         <!--  ═══════════════════════════════════════════════════════════════  -->
-        <Border Grid.Row="5"
+        <Border x:Name="ToolbarBorder"
+                Grid.Row="5"
                 Margin="6,5,6,0"
                 Padding="10,8"
                 BackgroundColor="#FFFFFF"
@@ -859,45 +860,39 @@
         </Border>
 
         <!--  ═══════════════════════════════════════════════════════════════  -->
-        <!--  DETAIL PANEL — Employee Detail Card (Bottom Sheet Style)  -->
-        <!--  ═══════════════════════════════════════════════════════════════  -->
-        <!--  ═══════════════════════════════════════════════════════════════  -->
-        <!--  DETAIL PANEL — Bottom Sheet Mejorado  -->
-        <!--  ═══════════════════════════════════════════════════════════════  -->
-        <!--  ═══════════════════════════════════════════════════════════════  -->
         <!--  DETAIL PANEL — Bottom Sheet Armonizado  -->
         <!--  ═══════════════════════════════════════════════════════════════  -->
         <Grid x:Name="OverlayGrid"
               Grid.RowSpan="7"
-              IsVisible="{Binding InvitadoSeleccionado, Converter={StaticResource NullToBoolConverter}}">
+              IsVisible="{Binding InvitadoSeleccionado, Converter={StaticResource NullToBoolConverter}}"
+              InputTransparent="True"
+              CascadeInputTransparent="False">
 
             <!--  BACKDROP (con opacidad animable)  -->
             <BoxView x:Name="Backdrop"
                      BackgroundColor="Black"
-                     Opacity="0.45"
-                     InputTransparent="False">
-                <BoxView.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnBackdropTapped" />
-                </BoxView.GestureRecognizers>
-            </BoxView>
+                     Opacity="0.0"
+                     InputTransparent="True" />
 
             <!--  BOTTOM SHEET  -->
             <Border x:Name="DetailSheet"
-                    Padding="24,16,24,24"
+                    Padding="24,20,24,24"
                     VerticalOptions="End"
                     BackgroundColor="{StaticResource CardBg}"
                     Stroke="{StaticResource CardBorder}"
                     StrokeThickness="1.2"
                     StrokeShape="RoundRectangle 28,28,0,0"
-                    TranslationY="400"
+                    TranslationY="0"
+                    InputTransparent="False"
                     Shadow="{StaticResource Elevation3}">
+
 
                 <Border.GestureRecognizers>
                     <PanGestureRecognizer PanUpdated="OnPanUpdated" />
                 </Border.GestureRecognizers>
 
                 <!--  Permitir scroll si el contenido lo requiere  -->
-                <ScrollView VerticalScrollBarVisibility="Never">
+                <ScrollView VerticalScrollBarVisibility="Default">
                     <VerticalStackLayout Spacing="20">
 
                         <!--  HANDLE  -->
@@ -913,26 +908,26 @@
                             <!--  Icono de estado (usando símbolos coherentes con la lista)  -->
                             <Border WidthRequest="56"
                                     HeightRequest="56"
-                                    BackgroundColor="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FEF3C7|#DCFCE7'}"
-                                    Stroke="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#FCD34D|#86EFAC'}"
+                                    BackgroundColor="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Background'}"
+                                    Stroke="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Indicator'}"
                                     StrokeThickness="2"
                                     StrokeShape="RoundRectangle 28"
                                     HorizontalOptions="Center"
                                     Shadow="{StaticResource Elevation1}">
-                                <Label Text="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='⚠|✓'}"
+                                <Label Text="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='⚠,⏳,✓'}"
                                        FontSize="24"
                                        FontAttributes="Bold"
                                        HorizontalOptions="Center"
                                        VerticalOptions="Center"
-                                       TextColor="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#B45309|#15803D'}" />
+                                       TextColor="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Text'}" />
                             </Border>
 
-                            <Label Text="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='REGISTRO FORZADO|CHECK-IN EXITOSO'}"
+                            <Label Text="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToStringConverter}, ConverterParameter='REGISTRO FORZADO,CHECK-IN EXITOSO'}"
                                    FontSize="14"
                                    FontAttributes="Bold"
                                    HorizontalOptions="Center"
                                    CharacterSpacing="0.5"
-                                   TextColor="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#B45309|#15803D'}" />
+                                   TextColor="{Binding InvitadoSeleccionado.RegistroForzado, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Text'}" />
                         </VerticalStackLayout>
 
                         <!--  SEPARADOR DÚCTIL  -->
@@ -982,8 +977,8 @@
 
                         <!--  ── SECCIÓN: DESPENSA ──  -->
                         <Border Padding="14"
-                                BackgroundColor="{Binding InvitadoSeleccionado.TieneDerechoADespensa, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#F0FDF4|#FEF2F2'}"
-                                Stroke="{Binding InvitadoSeleccionado.TieneDerechoADespensa, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#86EFAC|#FCA5A5'}"
+                                BackgroundColor="{Binding InvitadoSeleccionado.TieneDerechoADespensa, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Background'}"
+                                Stroke="{Binding InvitadoSeleccionado.TieneDerechoADespensa, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Indicator'}"
                                 StrokeThickness="1.2"
                                 StrokeShape="RoundRectangle 16"
                                 Shadow="{StaticResource SubtleShadow}">
@@ -991,7 +986,7 @@
                                 <!--  Mini indicador  -->
                                 <Border WidthRequest="10"
                                         HeightRequest="10"
-                                        BackgroundColor="{Binding InvitadoSeleccionado.TieneDerechoADespensa, Converter={StaticResource BoolToColorConverter}, ConverterParameter='#22C55E|#EF4444'}"
+                                        BackgroundColor="{Binding InvitadoSeleccionado.TieneDerechoADespensa, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Indicator'}"
                                         StrokeThickness="0"
                                         StrokeShape="RoundRectangle 5"
                                         VerticalOptions="Center" />
@@ -999,7 +994,7 @@
                                        FontSize="15"
                                        FontAttributes="Bold"
                                        VerticalOptions="Center"
-                                       TextColor="{Binding InvitadoSeleccionado.TieneDerechoADespensa, Converter={StaticResource BoolToColorConverter}, ConverterParameter='SuccessGreen|DangerRed'}" />
+                                       TextColor="{Binding InvitadoSeleccionado.TieneDerechoADespensa, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Text'}" />
                             </HorizontalStackLayout>
                         </Border>
 

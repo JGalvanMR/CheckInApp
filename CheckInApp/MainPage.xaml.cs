@@ -42,78 +42,34 @@ public partial class MainPage : ContentPage
             Multiple = false
         };
 
-        WeakReferenceMessenger.Default.Register<CloseDetailMessage>(this, async (r, m) =>
-        {
-            await HideDetails();
-        });
+        //WeakReferenceMessenger.Default.Register<CloseDetailMessage>(this, async (r, m) =>
+        //{
+        //    await HideDetails();
+        //});
     }
 
     protected override async void OnAppearing()
     {
         base.OnAppearing();
 
-        if (BindingContext is MainViewModel vm)
-        {
-            vm.PropertyChanged += async (s, e) =>
-            {
-                if (e.PropertyName == nameof(vm.MostrarDetalles))
-                {
-                    if (vm.MostrarDetalles)
-                        await ShowSheet();
-                    else
-                        await HideSheet();
-                }
-            };
-        }
+        //if (BindingContext is MainViewModel vm)
+        //{
+        //    vm.PropertyChanged += async (s, e) =>
+        //    {
+        //        if (e.PropertyName == nameof(vm.MostrarDetalles))
+        //        {
+        //            if (vm.MostrarDetalles)
+        //                await ShowSheet();
+        //            else
+        //                await HideSheet();
+        //        }
+        //    };
+        //}
 
-        // Tap backdrop para cerrar
-        var tap = new TapGestureRecognizer();
-        tap.Tapped += async (s, e) => await HideSheet();
-        Backdrop.GestureRecognizers.Add(tap);
-    }
-    private async Task ShowSheet()
-    {
-        Backdrop.IsVisible = true;
-        DetailSheet.IsVisible = true;
-
-        DetailSheet.TranslationY = ClosedPosition;
-        Backdrop.Opacity = 0;
-
-        await Task.WhenAll(
-            DetailSheet.TranslateTo(0, OpenPosition, 280, Easing.CubicOut),
-            Backdrop.FadeTo(0.4, 280, Easing.CubicOut)
-        );
-    }
-    private async Task HideSheet()
-    {
-        await Task.WhenAll(
-            DetailSheet.TranslateTo(0, ClosedPosition, 220, Easing.CubicIn),
-            Backdrop.FadeTo(0, 200, Easing.CubicIn)
-        );
-
-        Backdrop.IsVisible = false;
-        DetailSheet.IsVisible = false;
-
-        if (BindingContext is MainViewModel vm)
-            vm.MostrarDetalles = false;
-    }
-
-    private async Task ShowDetails()
-    {
-        DetailSheet.TranslationY = 350;
-        DetailSheet.IsVisible = true;
-
-        await DetailSheet.TranslateTo(0, 0, 260, Easing.CubicOut);
-    }
-
-    private async Task HideDetails()
-    {
-        await DetailSheet.TranslateTo(0, 350, 200, Easing.CubicIn);
-
-        DetailSheet.IsVisible = false;
-
-        if (BindingContext is MainViewModel vm)
-            vm.MostrarDetalles = false;
+        //// Tap backdrop para cerrar
+        //var tap = new TapGestureRecognizer();
+        //tap.Tapped += async (s, e) => await HideSheet();
+        //Backdrop.GestureRecognizers.Add(tap);
     }
 
     protected override void OnDisappearing()
@@ -183,12 +139,23 @@ public partial class MainPage : ContentPage
     {
         if (BindingContext is MainViewModel vm && vm.InvitadoSeleccionado != null)
         {
+            // Calcular la altura máxima disponible desde arriba hasta la toolbar
+            double toolbarY = ToolbarBorder.Y; // posición Y absoluta de la toolbar
+            double safeMargin = 20;            // separación visual entre el panel y la toolbar
+            double maxHeight = toolbarY - safeMargin;
+
+            // Si por alguna razón aún no está renderizada la toolbar, usa un valor grande
+            if (maxHeight <= 200)
+                maxHeight = 600;
+
+            DetailSheet.HeightRequest = maxHeight;
+
             OverlayGrid.IsVisible = true;
-            DetailSheet.TranslationY = 400; // posición inicial abajo
-            Backdrop.Opacity = 0;
+            DetailSheet.TranslationY = 450;
+            Backdrop.Opacity = 0.0;
 
             await Task.WhenAll(
-                Backdrop.FadeTo(0.45, 250, Easing.CubicOut),
+                Backdrop.FadeTo(0.4, 280, Easing.CubicOut),
                 DetailSheet.TranslateTo(0, 0, 350, Easing.CubicOut)
             );
         }
@@ -197,11 +164,10 @@ public partial class MainPage : ContentPage
     private async Task OcultarPanelDetalle()
     {
         await Task.WhenAll(
-            Backdrop.FadeTo(0, 200, Easing.CubicIn),
-            DetailSheet.TranslateTo(0, 400, 300, Easing.CubicIn)
+            Backdrop.FadeTo(0.0, 200, Easing.CubicIn),
+            DetailSheet.TranslateTo(0, 450, 300, Easing.CubicIn)
         );
 
-        // Limpiar selección y ocultar overlay
         if (BindingContext is MainViewModel vm)
             vm.LimpiarResultadoCommand.Execute(null);
 
@@ -214,25 +180,20 @@ public partial class MainPage : ContentPage
         switch (e.StatusType)
         {
             case GestureStatus.Running:
-                // Mover el sheet hacia abajo mientras se arrastra
                 double newY = Math.Max(0, DetailSheet.TranslationY + e.TotalY);
                 DetailSheet.TranslationY = newY;
-                // También puedes atenuar el backdrop
-                double progress = newY / 400;
-                Backdrop.Opacity = 0.45 * (1 - progress);
+                // Sincronizar opacidad del backdrop con la posición
+                Backdrop.Opacity = 0.4 * (1 - newY / 450);
                 break;
 
             case GestureStatus.Completed:
-                if (DetailSheet.TranslationY > 150) // umbral para cerrar
+                if (DetailSheet.TranslationY > 180)  // umbral para cerrar
                     await OcultarPanelDetalle();
                 else
-                {
-                    // Volver a posición abierta
                     await Task.WhenAll(
-                        Backdrop.FadeTo(0.45, 250, Easing.CubicOut),
+                        Backdrop.FadeTo(0.4, 250, Easing.CubicOut),
                         DetailSheet.TranslateTo(0, 0, 250, Easing.CubicOut)
                     );
-                }
                 break;
         }
     }
